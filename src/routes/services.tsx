@@ -16,7 +16,10 @@ export const Route = createFileRoute("/services")({
   component: ServicesPage,
 });
 
-const SERVICES = [
+type ServiceCard = { icon: any; title: string; items?: string[]; body?: string };
+type Service = { id: string; n: string; title: string; tagline: string; body: string; cards: ServiceCard[] };
+
+const SERVICES: Service[] = [
   {
     id: "web",
     n: "Service 1",
@@ -62,7 +65,7 @@ const SERVICES = [
       { icon: ShieldCheck, title: "Benefits", items: ["Reduced downtime & support costs", "Better product stability", "Seamless user experience", "Accelerated development cycles"] },
     ],
   },
-] as const;
+];
 
 function ServicesPage() {
   return (
