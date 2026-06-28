@@ -15,7 +15,7 @@ export function SectionTitle({
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="flex items-center justify-center gap-4 mb-12"
     >
-      <Hex small light={light} />
+      <Sparkle small light={light} />
       <h2
         className={`text-3xl sm:text-4xl font-bold tracking-tight ${
           light ? "text-white" : "text-foreground"
@@ -23,23 +23,21 @@ export function SectionTitle({
       >
         {children}
       </h2>
-      <Hex small light={light} />
+      <Sparkle small light={light} />
     </motion.div>
   );
 }
 
-function Hex({ small, light }: { small?: boolean; light?: boolean }) {
+function Sparkle({ small, light }: { small?: boolean; light?: boolean }) {
   const size = small ? "h-5 w-5" : "h-6 w-6";
   return (
-    <span className={`relative ${size} flex-shrink-0`}>
-      <span
-        className={`absolute inset-0 hex-pointy border-2 ${
-          light ? "border-white/70" : "border-primary/70"
-        }`}
-        style={{ clipPath: "none", borderRadius: 0 }}
-      />
-      <svg viewBox="0 0 24 24" className={`absolute inset-0 ${light ? "text-white/80" : "text-primary"}`} fill="none" stroke="currentColor" strokeWidth="1.8">
-        <polygon points="12,2 22,7 22,17 12,22 2,17 2,7" />
+    <span className={`relative ${size} flex-shrink-0 animate-[pulse_3s_ease-in-out_infinite]`}>
+      <svg
+        viewBox="0 0 24 24"
+        className={`absolute inset-0 ${light ? "text-white/80" : "text-secondary"}`}
+        fill="currentColor"
+      >
+        <path d="M12,2 C12,9 15,12 22,12 C15,12 12,15 12,22 C12,15 9,12 2,12 C9,12 12,9 12,2 Z" />
       </svg>
     </span>
   );

@@ -1,50 +1,50 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { Check, MapPin, Clock, FileText, Bell, Megaphone, Repeat, MapPinned, Smartphone, Database, Shield, Cloud } from "lucide-react";
+import { Layers, ShieldCheck, Zap, Server, Sliders, Smartphone, Orbit, CalendarRange, Clock } from "lucide-react";
 import { SectionTitle } from "@/components/SectionTitle";
 import { HexBackground } from "@/components/HexBackground";
 
 export const Route = createFileRoute("/products")({
   head: () => ({
     meta: [
-      { title: "Markn — GPS Attendance | BeeLogic Products" },
-      { name: "description", content: "Markn is a real-time GPS attendance system that prevents time fraud and streamlines HR work." },
-      { property: "og:title", content: "Markn — GPS Attendance | BeeLogic Products" },
-      { property: "og:description", content: "Real-time GPS attendance for on-site, remote, and field teams." },
+      { title: "Stealth Product Lab & Roadmap — JTL" },
+      { name: "description", content: "Explore Juruanya Technologies Limited's active SaaS and mobile product pipeline and our development roadmap." },
+      { property: "og:title", content: "Stealth Product Lab & Roadmap — JTL" },
+      { property: "og:description", content: "SaaS tools, geofenced mobile trackers, and messaging infrastructure in active development." },
     ],
   }),
   component: ProductsPage,
 });
 
-const BENEFITS = [
-  "Accurate & Real-Time GPS Tracking",
-  "Geofencing for Location Control",
-  "Prevents Time Fraud",
-  "Ideal for Remote & Field Staff",
-  "Automated & Efficient",
-  "Insights & Analytics",
-  "HR & Payroll Integration",
-  "Eco-Friendly & Paperless",
+const PIPELINE = [
+  {
+    icon: Layers,
+    title: "SaaS Productivity Suite",
+    desc: "A cloud-based SaaS platform focused on business automation. Integrates daily workforce logs, task distribution, and operations approval flows in a single multi-tenant workspace.",
+    status: "In Development",
+    tech: "React · Node.js · PostgreSQL",
+  },
+  {
+    icon: Smartphone,
+    title: "Geofenced Mobile Operations",
+    desc: "A native and cross-platform mobile tracker for field teams. Implements geofenced check-ins, automated time-frame triggers, and direct manager notifications with zero time-tampering.",
+    status: "Private Beta",
+    tech: "Flutter · Geofencing API",
+  },
+  {
+    icon: Server,
+    title: "High-Throughput Messaging API",
+    desc: "Messaging gateway infrastructure enabling companies to trigger bulk SMS alerts, push notifications, and security OTP authentication codes via clean, developers-friendly REST APIs.",
+    status: "Internal Testing",
+    tech: "Go · Redis · SMPP",
+  },
 ];
 
-const FEATURES = [
-  { icon: MapPin, title: "GPS Attendance with Adjustable Radius" },
-  { icon: Clock, title: "Auto Calculation of Daily Working Hours" },
-  { icon: FileText, title: "Absence Reports Generation" },
-  { icon: Bell, title: "Vacation & Excuse Requests with Manager Notifications" },
-  { icon: Repeat, title: "Automatic Approval Notifications for Employees" },
-  { icon: Megaphone, title: "Admin Push Notifications for Announcements" },
-  { icon: Repeat, title: "Automatic In/Out Logic Based on Time Frames" },
-  { icon: MapPinned, title: "Location Management & Employee Assignment" },
-];
-
-const AUDIENCE = [
-  "Remote Teams & Field Staff",
-  "Delivery & Logistics Teams",
-  "Healthcare & Facility Staff",
-  "Construction & Site-Based Companies",
-  "Small Businesses to Large Enterprises",
-  "Schools & Universities",
+const MILESTONES = [
+  { date: "June 9, 2026", title: "Incorporation", desc: "Juruanya Technologies Limited officially registered with CAC, RC: 9600871." },
+  { date: "Q3 2026", title: "Product Prototyping", desc: "Developing stealth SaaS dashboards and geofenced mobile beta architectures." },
+  { date: "Q4 2026", title: "Early Investor Pitching", desc: "Presenting active software suites and hardware blueprints to early-stage investors." },
+  { date: "Q1 2027", title: "Developer Beta Launch", desc: "Opening beta testing for our messaging APIs and geofenced operations tracker." },
 ];
 
 function ProductsPage() {
@@ -53,134 +53,98 @@ function ProductsPage() {
       {/* HERO */}
       <section className="relative bg-soft py-20">
         <HexBackground />
-        <div className="mx-auto max-w-6xl px-6 grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <p className="text-sm text-muted-foreground">Home › Products › <span className="text-primary">Markn</span></p>
-            <h1 className="mt-3 text-5xl sm:text-6xl font-bold text-gradient">Markn App</h1>
-            <p className="mt-4 text-foreground/80">(GPS Attendance System — Real-Time Attendance Tracking for Today's Workforce)</p>
-            <h3 className="mt-8 text-xl font-bold text-primary border-b-2 border-primary inline-block">Why choose Markn?</h3>
-            <p className="mt-4 text-muted-foreground leading-relaxed">
-              Typical attendance systems are often inaccurate, cumbersome, and easily manipulated. Whether your
-              team is on-site, remote, or in the field, Markn provides your organization with real-time GPS attendance
-              that guarantees accountability, prevents time cheating, and streamlines HR administrative work.
-            </p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7 }}
-            className="relative grid place-items-center"
-          >
-            <div className="relative w-72 h-[36rem] rounded-[3rem] bg-[var(--ink)] p-3 shadow-2xl rotate-[-8deg] hover:rotate-0 transition-transform duration-700">
-              <div className="h-full w-full rounded-[2.4rem] bg-gradient-to-br from-primary to-[var(--primary-deep)] p-6 flex flex-col items-center justify-center text-white">
-                <Smartphone className="h-14 w-14" />
-                <div className="mt-6 font-display text-4xl font-extrabold">MARK-N</div>
-                <p className="mt-2 text-sm text-white/80">Tap to clock in</p>
-                <div className="mt-8 h-32 w-32 rounded-full border-2 border-white/30 grid place-items-center">
-                  <div className="h-24 w-24 rounded-full bg-white/15 grid place-items-center">
-                    <MapPin className="h-10 w-10" />
+        <div className="mx-auto max-w-6xl px-6 text-center">
+          <p className="text-xs text-muted-foreground font-mono uppercase tracking-wider">Stealth Lab & Roadmap</p>
+          <h1 className="mt-3 text-5xl sm:text-6xl font-bold text-gradient">Product Pipeline</h1>
+          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            We are actively developing proprietary software suites, cloud solutions, and technology hardware. 
+            Below is a preview of the projects currently in JTL's development pipeline.
+          </p>
+        </div>
+      </section>
+
+      {/* PIPELINE CARDS */}
+      <section className="py-20 bg-white">
+        <div className="mx-auto max-w-6xl px-6">
+          <SectionTitle>Stealth Projects</SectionTitle>
+          <div className="grid md:grid-cols-3 gap-6">
+            {PIPELINE.map((p, i) => (
+              <motion.div
+                key={p.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="group relative rounded-2xl bg-soft border border-border/60 p-7 hover:border-secondary/40 hover:shadow-xl transition-all"
+              >
+                <div className="flex justify-between items-start">
+                  <div className="h-12 w-12 grid place-items-center hex-pointy bg-secondary/10 text-secondary">
+                    <p.icon className="h-6 w-6" />
                   </div>
+                  <span className="text-[10px] font-mono font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/10">
+                    {p.status}
+                  </span>
                 </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Download */}
-        <div className="mx-auto max-w-6xl px-6 mt-16 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold flex items-center justify-center gap-3">
-            <span className="hex-pointy h-4 w-4 bg-primary inline-block" />
-            Download Our App
-            <span className="hex-pointy h-4 w-4 bg-primary inline-block" />
-          </h2>
-          <div className="mt-6 flex flex-wrap justify-center gap-4">
-            <a href="https://apps.apple.com/eg/app/mark-n/id6752826107" className="px-6 py-3 rounded-lg bg-[var(--ink)] text-white font-semibold flex items-center gap-2 hover:scale-105 transition-transform">
-              <span className="text-xs">Download on the</span> <span className="font-bold">App Store</span>
-            </a>
-            <a href="https://play.google.com/store/apps/details?id=com.beelogic.markno" className="px-6 py-3 rounded-lg bg-[var(--ink)] text-white font-semibold flex items-center gap-2 hover:scale-105 transition-transform">
-              <span className="text-xs">Get it on</span> <span className="font-bold">Google Play</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* KEY BENEFITS */}
-      <section className="py-20 bg-white">
-        <div className="mx-auto max-w-6xl px-6">
-          <SectionTitle>Key Benefits</SectionTitle>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {BENEFITS.map((b, i) => (
-              <motion.div
-                key={b}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.04 }}
-                className="flex items-start gap-3 p-5 rounded-xl bg-card border border-border/60 hover:border-primary/40 hover:shadow-md transition"
-              >
-                <div className="h-8 w-8 grid place-items-center rounded-full bg-primary text-white flex-shrink-0">
-                  <Check className="h-4 w-4" />
+                <h3 className="mt-5 text-xl font-bold text-primary">{p.title}</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
+                <div className="mt-6 pt-4 border-t border-border/60 flex items-center justify-between">
+                  <span className="text-[10px] font-mono text-muted-foreground">Tech Stack:</span>
+                  <span className="text-[10px] font-mono font-bold text-foreground">{p.tech}</span>
                 </div>
-                <span className="text-sm font-medium text-foreground/85">{b}</span>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CORE FEATURES */}
-      <section className="py-20 bg-soft">
+      {/* ROADMAP TIMELINE */}
+      <section className="py-20 bg-soft relative">
+        <HexBackground />
         <div className="mx-auto max-w-6xl px-6">
-          <SectionTitle>Core Features</SectionTitle>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {FEATURES.map((f, i) => (
+          <SectionTitle>Our Roadmap</SectionTitle>
+          <div className="relative border-l-2 border-primary/20 max-w-3xl mx-auto pl-8 space-y-12 py-4">
+            {MILESTONES.map((m, i) => (
               <motion.div
-                key={f.title}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                key={m.title}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: i * 0.05 }}
-                className="group p-6 rounded-2xl bg-card border border-border/60 hover:border-primary/40 hover:-translate-y-1 transition"
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="relative"
               >
-                <div className="h-12 w-12 grid place-items-center hex-pointy bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition">
-                  <f.icon className="h-6 w-6" />
+                {/* Node indicator */}
+                <div className="absolute -left-[41px] top-1.5 h-6 w-6 rounded-full bg-white border-4 border-primary flex items-center justify-center">
+                  <div className="h-2 w-2 rounded-full bg-secondary" />
                 </div>
-                <p className="mt-4 text-sm font-medium text-foreground/85">{f.title}</p>
+                <div>
+                  <span className="font-mono text-xs font-bold text-secondary uppercase tracking-wider flex items-center gap-1.5">
+                    <CalendarRange className="h-3.5 w-3.5" />
+                    {m.date}
+                  </span>
+                  <h3 className="mt-1 text-lg font-bold text-primary">{m.title}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{m.desc}</p>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* AUDIENCE */}
+      {/* STRATEGIC CAPABILITIES */}
       <section className="py-20 bg-white">
         <div className="mx-auto max-w-6xl px-6">
-          <SectionTitle>Who is it for?</SectionTitle>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {AUDIENCE.map((a) => (
-              <div key={a} className="p-5 rounded-xl bg-soft border border-border/60 text-center font-medium text-foreground/85 hover:border-primary/40 transition">
-                {a}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* TECHNOLOGIES */}
-      <section className="py-20 bg-soft">
-        <div className="mx-auto max-w-6xl px-6">
-          <SectionTitle>Technologies</SectionTitle>
+          <SectionTitle>Platform Ecosystem</SectionTitle>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { icon: Database, t: "Web Platform", d: "MySQL · Laravel" },
-              { icon: Smartphone, t: "Mobile App", d: "Flutter (iOS & Android)" },
-              { icon: Cloud, t: "Hosting", d: "Cloud-based deployment" },
-              { icon: Shield, t: "Security", d: "End-to-end encryption + Audit trails" },
+              { icon: Orbit, t: "Connected APIs", d: "Unified triggers for multi-channel developer access." },
+              { icon: Sliders, t: "Modular Layouts", d: "Easily configured dashboards for customizable operations." },
+              { icon: ShieldCheck, t: "Zero-Trust Auditing", d: "Cryptographic validation for logs and transactions." },
+              { icon: Zap, t: "Optimized Performance", d: "High concurrency handlers for instant message queues." },
             ].map((tech) => (
-              <div key={tech.t} className="p-6 rounded-2xl bg-card border border-border/60">
-                <tech.icon className="h-8 w-8 text-primary" />
-                <h3 className="mt-3 font-bold">{tech.t}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{tech.d}</p>
+              <div key={tech.t} className="p-6 rounded-2xl bg-soft border border-border/60 hover:border-secondary/40 transition">
+                <tech.icon className="h-8 w-8 text-secondary" />
+                <h3 className="mt-3 font-bold text-primary">{tech.t}</h3>
+                <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{tech.d}</p>
               </div>
             ))}
           </div>
@@ -190,12 +154,13 @@ function ProductsPage() {
       {/* CTA */}
       <section className="py-20 bg-[var(--ink)] text-white text-center">
         <div className="mx-auto max-w-3xl px-6">
-          <h2 className="text-3xl sm:text-4xl font-bold">Ready to Modernize Your Attendance System?</h2>
-          <p className="mt-4 text-white/70">Let Markn streamline your operations with GPS-powered accuracy and automation.</p>
-          <p className="mt-2 text-white font-semibold">Start a Free Demo or Request a custom Quote Today</p>
+          <h2 className="text-3xl sm:text-4xl font-bold">Request a Strategic Briefing</h2>
+          <p className="mt-4 text-white/70">
+            For investor inquiries or prospective platform partnerships, contact us for access to our technical whitepapers and private beta demos.
+          </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link to="/contact" className="px-7 py-3.5 rounded-md bg-primary text-primary-foreground font-semibold hover:bg-[var(--primary-deep)] transition">Request a Demo</Link>
-            <Link to="/contact" className="px-7 py-3.5 rounded-md border-2 border-primary text-primary font-semibold hover:bg-primary hover:text-white transition">Contact Sales</Link>
+            <Link to="/contact" className="px-7 py-3.5 rounded-md bg-secondary text-white font-semibold hover:bg-orange-600 transition">Request Details</Link>
+            <Link to="/contact" className="px-7 py-3.5 rounded-md border-2 border-secondary text-secondary font-semibold hover:bg-secondary hover:text-white transition">Contact Leadership</Link>
           </div>
         </div>
       </section>

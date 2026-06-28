@@ -1,6 +1,7 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { JTLLogo } from "./JTLLogo";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -31,21 +32,13 @@ export function SiteHeader() {
       <div
         className={`mx-auto max-w-6xl nav-pill transition-all duration-300 ${
           scrolled
-            ? "bg-white/90 backdrop-blur shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)]"
-            : "bg-white/70 backdrop-blur shadow-[0_4px_20px_-12px_rgba(0,0,0,0.1)]"
+            ? "bg-white/90 backdrop-blur shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)] dark:bg-black/90"
+            : "bg-white/70 backdrop-blur shadow-[0_4px_20px_-12px_rgba(0,0,0,0.1)] dark:bg-black/70"
         }`}
       >
         <div className="flex items-center justify-between px-6 sm:px-10 py-3">
           <Link to="/" className="flex items-center gap-2 group">
-            <span className="relative flex h-9 w-9 items-center justify-center">
-              <span className="absolute inset-0 hex-pointy bg-primary/15" />
-              <span className="absolute inset-[18%] hex-pointy bg-primary" />
-              <span className="absolute inset-[34%] hex-pointy bg-white" />
-            </span>
-            <span className="font-display text-xl font-semibold tracking-tight">
-              <span className="text-primary">Bee</span>
-              <span className="text-foreground">Logic</span>
-            </span>
+            <JTLLogo className="h-16 md:h-20 py-0" />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-7">

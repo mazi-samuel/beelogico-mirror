@@ -1,0 +1,84 @@
+<svg
+  viewBox="0 0 100 100"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Eyebrow: Deep Navy Blue -->
+  <path
+    d="M 28 17 C 36 9, 64 9, 72 17 C 62 13, 38 13, 28 17 Z"
+    fill="#0d2d6b"
+  />
+
+  <!-- Orange Accent Arch -->
+  <path
+    d="M 33 21 C 45 15, 60 17, 72 26 C 75 28.5, 77 31.5, 79.5, 34 C 77.5, 32.5, 74.5, 30.5, 72.5, 29 C 64 22.5, 48 20.5, 33 21 Z"
+    fill="#e87722"
+  />
+
+  <!-- Outer Eyelid: Deep Navy Blue -->
+  <path
+    d="M 17 38 C 24 28, 76 28, 83 38 C 84 39, 85 40, 86.5, 41.5 C 75 51, 25 51, 17 38 Z"
+    fill="#0d2d6b"
+    opacity="0.1"
+  />
+  <path
+    d="M 17 38 C 30 24, 70 24, 83 38"
+    stroke="#0d2d6b"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+  <path
+    d="M 17 38 C 30 52, 70 52, 83 38"
+    stroke="#0d2d6b"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+
+  <!-- Iris & Digital Pattern -->
+  <circle cx="50" cy="38" r="18" fill="#0b3b8c" />
+  <circle cx="50" cy="38" r="17" fill="url(#favIrisGrad)" />
+
+  <!-- Digital Circuit Lines -->
+  <g stroke="#00d4ff" stroke-width="0.8" opacity="0.8">
+    <line x1="50" y1="38" x2="59" y2="29" />
+    <line x1="50" y1="38" x2="41" y2="47" />
+    <line x1="50" y1="38" x2="38" y2="38" />
+    <line x1="50" y1="38" x2="62" y2="38" />
+    <line x1="50" y1="38" x2="50" y2="23" />
+    <line x1="50" y1="38" x2="50" y2="53" />
+    <line x1="50" y1="38" x2="41" y2="29" />
+    <line x1="50" y1="38" x2="59" y2="47" />
+  </g>
+  
+  <circle cx="59" cy="29" r="1.2" fill="#00d4ff" />
+  <circle cx="41" cy="47" r="1.2" fill="#00d4ff" />
+  <circle cx="38" cy="38" r="1.2" fill="#00d4ff" />
+  <circle cx="62" cy="38" r="1.2" fill="#00d4ff" />
+  <circle cx="50" cy="23" r="1.2" fill="#00d4ff" />
+  <circle cx="41" cy="29" r="1.2" fill="#00d4ff" />
+  <circle cx="59" cy="47" r="1.2" fill="#00d4ff" />
+
+  <!-- Glowing Center Ring -->
+  <circle cx="50" cy="38" r="9" fill="none" stroke="#00d4ff" stroke-width="1.2" />
+
+  <!-- Pupil -->
+  <circle cx="50" cy="38" r="6" fill="#03112c" />
+
+  <!-- Light Reflection -->
+  <circle cx="45" cy="33" r="3.5" fill="white" />
+  <circle cx="48" cy="30" r="1.2" fill="white" opacity="0.7" />
+
+  <defs>
+    <radialGradient
+      id="favIrisGrad"
+      cx="50"
+      cy="38"
+      r="17"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0%" stop-color="#00d4ff" />
+      <stop offset="40%" stop-color="#0077c8" />
+      <stop offset="100%" stop-color="#0d2d6b" />
+    </radialGradient>
+  </defs>
+</svg>

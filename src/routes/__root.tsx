@@ -35,15 +35,20 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "BeeLogic — Custom Software That Fits Your Business" },
-      { name: "description", content: "BeeLogic designs and develops intuitive, scalable web and mobile applications that simplify operations and drive growth." },
-      { name: "author", content: "BeeLogic" },
-      { property: "og:title", content: "BeeLogic — Custom Software That Fits Your Business" },
-      { property: "og:description", content: "Web, mobile, design and QA — built by a team that ships." },
+      { title: "Jụ̀rụ̀ ányá Technologies Limited — JTL" },
+      { name: "description", content: "Lagos-based technology company building software, platforms & digital products that astonish. Innovate | Astonish | Transform" },
+      { name: "author", content: "JTL" },
+      { property: "og:title", content: "Jụ̀rụ̀ ányá Technologies Limited — JTL" },
+      { property: "og:description", content: "Lagos-based technology company building software, platforms & digital products that astonish." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
     links: [
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        href: "/favicon.svg",
+      },
       {
         rel: "stylesheet",
         href: appCss,
@@ -52,7 +57,7 @@ export const Route = createRootRoute({
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap",
       },
     ],
   }),
