@@ -5,18 +5,20 @@ export function JTLLogo({
   showText = true,
   variant = "horizontal",
   useImage = true,
+  light = false,
 }: {
   className?: string;
   showText?: boolean;
   variant?: "horizontal" | "vertical" | "icon";
   useImage?: boolean;
+  light?: boolean;
 }) {
   if (useImage) {
     return (
       <img
         src="/logo.png"
         alt="Jụ̀rụ̀ ányá Technologies Limited"
-        className={`${className} object-contain dark:invert`}
+        className={`${className} object-contain ${light ? "brightness-0 invert" : "dark:invert"}`}
       />
     );
   }
@@ -29,10 +31,10 @@ export function JTLLogo({
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Eyebrow: Deep Navy Blue */}
+        {/* Eyebrow: Light Cyan when in light-mode footer, otherwise primary */}
         <path
           d="M 28 17 C 36 9, 64 9, 72 17 C 62 13, 38 13, 28 17 Z"
-          fill="var(--primary, #0d2d6b)"
+          fill={light ? "#00d4ff" : "var(--primary, #0d2d6b)"}
         />
 
         {/* Orange Accent Arch */}
@@ -41,21 +43,21 @@ export function JTLLogo({
           fill="var(--secondary, #e87722)"
         />
 
-        {/* Outer Eyelid: Deep Navy Blue */}
+        {/* Outer Eyelid: Light/White when light prop is active */}
         <path
           d="M 17 38 C 24 28, 76 28, 83 38 C 84 39, 85 40, 86.5, 41.5 C 75 51, 25 51, 17 38 Z"
-          fill="var(--primary, #0d2d6b)"
+          fill={light ? "#ffffff" : "var(--primary, #0d2d6b)"}
           opacity="0.1"
         />
         <path
           d="M 17 38 C 30 24, 70 24, 83 38"
-          stroke="var(--primary, #0d2d6b)"
+          stroke={light ? "#ffffff" : "var(--primary, #0d2d6b)"}
           strokeWidth="3.5"
           strokeLinecap="round"
         />
         <path
           d="M 17 38 C 30 52, 70 52, 83 38"
-          stroke="var(--primary, #0d2d6b)"
+          stroke={light ? "#ffffff" : "var(--primary, #0d2d6b)"}
           strokeWidth="3.5"
           strokeLinecap="round"
         />
@@ -64,7 +66,7 @@ export function JTLLogo({
         {/* Outer Iris Circle */}
         <circle cx="50" cy="38" r="18" fill="#0b3b8c" />
         {/* Iris Gradient Inner */}
-        <circle cx="50" cy="38" r="17" fill="url(#irisGrad)" />
+        <circle cx="50" cy="38" r="17" fill="url(#irisGradFooter)" />
 
         {/* Digital Circuit Lines / Radiating Sparkles inside Iris */}
         <g stroke="var(--accent, #00d4ff)" strokeWidth="0.8" opacity="0.8">
@@ -100,7 +102,7 @@ export function JTLLogo({
         {/* Gradients */}
         <defs>
           <radialGradient
-            id="irisGrad"
+            id="irisGradFooter"
             cx="50"
             cy="38"
             r="17"
@@ -115,14 +117,14 @@ export function JTLLogo({
 
       {showText && (
         <div className={`flex flex-col select-none ${variant === "vertical" ? "items-center" : "items-start"}`}>
-          <span className="font-display text-xl font-bold tracking-tight text-[#0d2d6b] dark:text-white leading-[1.1] relative">
+          <span className={`font-display text-xl font-bold tracking-tight leading-[1.1] relative ${light ? "text-white" : "text-[#0d2d6b] dark:text-white"}`}>
             Jụ̀rụ̀ ányá
           </span>
-          <span className="font-mono text-[9px] tracking-wider text-[#0d2d6b]/70 dark:text-white/60 uppercase font-semibold">
+          <span className={`font-mono text-[9px] tracking-wider uppercase font-semibold ${light ? "text-white/70" : "text-[#0d2d6b]/70 dark:text-white/60"}`}>
             Technologies Limited
           </span>
           {variant === "vertical" && (
-            <span className="text-[10px] text-muted-foreground mt-1 font-medium font-sans">
+            <span className={`text-[10px] mt-1 font-medium font-sans ${light ? "text-white/60" : "text-muted-foreground"}`}>
               Innovate | Astonish | Transform
             </span>
           )}

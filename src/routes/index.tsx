@@ -75,7 +75,7 @@ function Home() {
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-            className="relative aspect-square max-w-[420px] ml-auto w-full"
+            className="relative aspect-square max-w-[420px] ml-auto w-full mt-16 lg:mt-0"
           >
             <HexCollage images={COLLAGE} />
           </motion.div>
