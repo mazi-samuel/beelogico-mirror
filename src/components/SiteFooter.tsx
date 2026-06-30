@@ -15,15 +15,31 @@ export function SiteFooter() {
             hardware products that astonish.
           </p>
           <div className="mt-6 flex gap-3">
-            {[Facebook, Linkedin, Instagram].map((Icon, i) => (
-              <a
-                key={i}
-                href="#"
-                className="grid h-9 w-9 place-items-center rounded-full border border-white/15 hover:bg-secondary hover:border-secondary transition"
-              >
-                <Icon className="h-4 w-4" />
-              </a>
-            ))}
+            <a
+              href="https://www.facebook.com/share/1JH8YqWsLn/?mibextid=wwXIfr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="grid h-9 w-9 place-items-center rounded-full border border-white/15 hover:bg-secondary hover:border-secondary transition text-white/80 hover:text-white"
+              title="Facebook"
+            >
+              <Facebook className="h-4 w-4" />
+            </a>
+            <a
+              href="#"
+              className="grid h-9 w-9 place-items-center rounded-full border border-white/15 hover:bg-secondary hover:border-secondary transition text-white/80 hover:text-white"
+              title="LinkedIn"
+            >
+              <Linkedin className="h-4 w-4" />
+            </a>
+            <a
+              href="https://www.instagram.com/juruanyatech"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="grid h-9 w-9 place-items-center rounded-full border border-white/15 hover:bg-secondary hover:border-secondary transition text-white/80 hover:text-white"
+              title="Instagram"
+            >
+              <Instagram className="h-4 w-4" />
+            </a>
           </div>
         </div>
 

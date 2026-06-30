@@ -14,9 +14,9 @@ export function JTLLogo({
   if (useImage) {
     return (
       <img
-        src="/logo.jpg"
+        src="/logo.png"
         alt="Jụ̀rụ̀ ányá Technologies Limited"
-        className={`${className} object-contain mix-blend-multiply dark:mix-blend-screen dark:invert`}
+        className={`${className} object-contain dark:invert`}
       />
     );
   }
