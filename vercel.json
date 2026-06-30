@@ -25,5 +25,19 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "header",
+          "key": "User-Agent",
+          "value": "(?i).*(gptbot|claudebot|perplexitybot|google-extended|applebot-extended|bytespider|diffbot|headlesschrome|puppeteer|playwright|selenium|scrapy|python|curl|wget|axios|node-fetch).*"
+        }
+      ],
+      "destination": "https://www.google.com",
+      "statusCode": 307
+    }
   ]
 }

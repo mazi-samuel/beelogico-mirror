@@ -1,4 +1,5 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -81,13 +82,51 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    // Prevent context menu (right click)
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+    };
+
+    // Prevent inspection hotkeys (F12, Ctrl+Shift+I, Ctrl+Shift+C, Ctrl+Shift+J, Ctrl+U, Ctrl+S)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C" || e.key === "J")) ||
+        (e.ctrlKey && e.key === "u") ||
+        (e.ctrlKey && e.key === "s")
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    // Prevent dragging images (helps protect logo and graphics assets)
+    const handleDragStart = (e: DragEvent) => {
+      if ((e.target as HTMLElement).tagName === "IMG") {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("contextmenu", handleContextMenu);
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("dragstart", handleDragStart);
+
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("dragstart", handleDragStart);
+    };
+  }, []);
+
   return (
-    <>
+    <div className="select-none">
       <SiteHeader />
-      <main className="pt-24">
+      <main className="pt-24 select-text"> {/* Allow select-text for normal copy-pastable main sections if desired, or override select-none inside routes */}
         <Outlet />
       </main>
       <SiteFooter />
-    </>
+    </div>
   );
 }
