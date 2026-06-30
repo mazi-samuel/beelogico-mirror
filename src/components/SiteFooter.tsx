@@ -8,7 +8,7 @@ export function SiteFooter() {
       <div className="absolute inset-x-0 -top-px h-24 bg-gradient-to-b from-background to-transparent pointer-events-none" />
       <div className="mx-auto max-w-6xl px-6 py-16 grid gap-10 md:grid-cols-4">
         <div className="md:col-span-2">
-          <JTLLogo useImage={false} light={true} className="h-16 py-1" />
+          <JTLLogo useImage={true} className="h-16 brightness-0 invert" />
           <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65">
             Juruanya Technologies Limited (JTL) is a Lagos-based technology startup building 
             innovative software solutions, digital platforms, SaaS products, AI/ML, and technology 
