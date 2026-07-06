@@ -25,7 +25,9 @@ export function SiteFooter() {
               <Facebook className="h-4 w-4" />
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/company/j%E1%BB%A5%CC%80r%E1%BB%A5%CC%80-%C3%A1ny%C3%A1-technologies-limited/?viewAsMember=true"
+              target="_blank"
+              rel="noopener noreferrer"
               className="grid h-9 w-9 place-items-center rounded-full border border-white/15 hover:bg-secondary hover:border-secondary transition text-white/80 hover:text-white"
               title="LinkedIn"
             >
