@@ -1,4 +1,3 @@
-import { WaterRippleBackground } from "./WaterRippleBackground";
 import { FluidDistortion } from "./FluidDistortion";
 
 /** Floating decorative sparkle outlines used across the site. */
@@ -6,7 +5,6 @@ export function HexBackground() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden -z-10">
       <FluidDistortion />
-      <WaterRippleBackground />
       <Outline 
         className="left-[-60px] top-24 h-56 w-56 text-primary/10 animate-[spin_80s_linear_infinite]" 
         filter="url(#water-displace)"
