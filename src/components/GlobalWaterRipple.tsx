@@ -37,7 +37,6 @@ export function GlobalWaterRipple() {
     window.addEventListener("resize", handleResize);
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Coordinates map directly to viewport pixels since canvas is fixed inset-0
       mouse.x = e.clientX;
       mouse.y = e.clientY;
 
@@ -48,13 +47,13 @@ export function GlobalWaterRipple() {
       }
 
       const dist = Math.hypot(mouse.x - mouse.lastX, mouse.y - mouse.lastY);
-      if (dist > 15) { // Trigger ripples on mouse movement
+      if (dist > 12) {
         ripples.push({
           x: mouse.x,
           y: mouse.y,
           radius: 2,
-          maxRadius: Math.random() * 40 + 35,
-          opacity: 0.6,
+          maxRadius: Math.random() * 45 + 35,
+          opacity: 0.7,
           speed: 1.2 + Math.random() * 0.8,
         });
         mouse.lastX = mouse.x;
@@ -63,29 +62,28 @@ export function GlobalWaterRipple() {
     };
 
     const handleClick = (e: MouseEvent) => {
-      // Spawn 3 concentric ripples on click
       ripples.push({
         x: e.clientX,
         y: e.clientY,
         radius: 3,
-        maxRadius: Math.random() * 90 + 90,
-        opacity: 0.8,
+        maxRadius: Math.random() * 100 + 100,
+        opacity: 0.85,
         speed: 1.8,
       });
       ripples.push({
         x: e.clientX,
         y: e.clientY,
-        radius: 10,
-        maxRadius: Math.random() * 70 + 70,
-        opacity: 0.7,
+        radius: 12,
+        maxRadius: Math.random() * 80 + 80,
+        opacity: 0.75,
         speed: 1.4,
       });
       ripples.push({
         x: e.clientX,
         y: e.clientY,
-        radius: 20,
-        maxRadius: Math.random() * 50 + 50,
-        opacity: 0.5,
+        radius: 24,
+        maxRadius: Math.random() * 60 + 60,
+        opacity: 0.55,
         speed: 1.0,
       });
     };
@@ -101,26 +99,52 @@ export function GlobalWaterRipple() {
 
       const isDark = theme === "dark";
 
-      // Draw flowing wave strokes at the very bottom of the viewport
-      const waveColor = isDark ? "rgba(0, 212, 255, 0.06)" : "rgba(13, 45, 107, 0.04)";
-      const waveStroke = isDark ? "rgba(0, 212, 255, 0.12)" : "rgba(13, 45, 107, 0.08)";
+      // Prominent, clearly visible bottom water waves (130px height)
+      const waveColor1 = isDark ? "rgba(0, 212, 255, 0.08)" : "rgba(13, 45, 107, 0.05)";
+      const waveColor2 = isDark ? "rgba(232, 119, 34, 0.05)" : "rgba(232, 119, 34, 0.035)";
+      
+      const strokeColor1 = isDark ? "rgba(0, 212, 255, 0.2)" : "rgba(13, 45, 107, 0.12)";
+      const strokeColor2 = isDark ? "rgba(232, 119, 34, 0.12)" : "rgba(232, 119, 34, 0.08)";
 
-      ctx.fillStyle = waveColor;
+      // Wave 1 (Deep Blue/Cyan Primary Wave)
+      ctx.fillStyle = waveColor1;
       ctx.beginPath();
       ctx.moveTo(0, height);
       for (let x = 0; x <= width; x += 15) {
-        const y = height - 45 + Math.sin(x * 0.004 + time * 1.5) * 15 + Math.cos(x * 0.002 + time * 0.8) * 8;
+        const y = height - 120 + Math.sin(x * 0.0035 + time * 1.3) * 22 + Math.cos(x * 0.0018 + time * 0.6) * 12;
         ctx.lineTo(x, y);
       }
       ctx.lineTo(width, height);
       ctx.closePath();
       ctx.fill();
 
-      ctx.strokeStyle = waveStroke;
+      ctx.strokeStyle = strokeColor1;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      for (let x = 0; x <= width; x += 15) {
+        const y = height - 120 + Math.sin(x * 0.0035 + time * 1.3) * 22 + Math.cos(x * 0.0018 + time * 0.6) * 12;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // Wave 2 (Orange Accent Wave)
+      ctx.fillStyle = waveColor2;
+      ctx.beginPath();
+      ctx.moveTo(0, height);
+      for (let x = 0; x <= width; x += 15) {
+        const y = height - 90 + Math.sin(x * 0.0045 - time * 1.0) * 18 + Math.cos(x * 0.0022 - time * 0.5) * 8;
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(width, height);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = strokeColor2;
       ctx.lineWidth = 1.2;
       ctx.beginPath();
       for (let x = 0; x <= width; x += 15) {
-        const y = height - 45 + Math.sin(x * 0.004 + time * 1.5) * 15 + Math.cos(x * 0.002 + time * 0.8) * 8;
+        const y = height - 90 + Math.sin(x * 0.0045 - time * 1.0) * 18 + Math.cos(x * 0.0022 - time * 0.5) * 8;
         if (x === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       }
@@ -129,14 +153,14 @@ export function GlobalWaterRipple() {
       // Update and draw ripples
       ripples = ripples.filter((r) => {
         r.radius += r.speed;
-        r.opacity -= 0.008;
+        r.opacity -= 0.006; // Fades out slowly (approx 3 seconds of persistence)
 
         if (r.opacity <= 0) return false;
 
         // Draw primary ring
         ctx.strokeStyle = isDark
-          ? `rgba(0, 212, 255, ${r.opacity * 0.7})`
-          : `rgba(13, 45, 107, ${r.opacity * 0.6})`;
+          ? `rgba(0, 212, 255, ${r.opacity * 0.8})`
+          : `rgba(13, 45, 107, ${r.opacity * 0.7})`;
         ctx.lineWidth = 2.0;
         ctx.beginPath();
         ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
@@ -145,8 +169,8 @@ export function GlobalWaterRipple() {
         // Draw secondary ring
         if (r.radius > 15) {
           ctx.strokeStyle = isDark
-            ? `rgba(232, 119, 34, ${r.opacity * 0.4})`
-            : `rgba(232, 119, 34, ${r.opacity * 0.3})`;
+            ? `rgba(232, 119, 34, ${r.opacity * 0.45})`
+            : `rgba(232, 119, 34, ${r.opacity * 0.35})`;
           ctx.lineWidth = 1.5;
           ctx.beginPath();
           ctx.arc(r.x, r.y, r.radius - 10, 0, Math.PI * 2);

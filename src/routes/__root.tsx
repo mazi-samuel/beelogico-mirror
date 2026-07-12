@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { ThemeProvider } from "../hooks/useTheme";
 import { GlobalWaterRipple } from "../components/GlobalWaterRipple";
+import { FluidDistortion } from "../components/FluidDistortion";
 
 function NotFoundComponent() {
   return (
@@ -149,8 +150,9 @@ function RootComponent() {
 
   return (
     <div className="select-none">
+      <FluidDistortion />
       <SiteHeader />
-      <main className="pt-32 select-text"> {/* Allow select-text for normal copy-pastable main sections if desired, or override select-none inside routes */}
+      <main className="pt-32 select-text" style={{ filter: "url(#water-displace)" }}>
         <Outlet />
       </main>
       <SiteFooter />
