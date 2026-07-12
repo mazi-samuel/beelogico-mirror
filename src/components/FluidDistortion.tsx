@@ -5,15 +5,26 @@ export function FluidDistortion() {
   const turbRef = useRef<SVGFETurbulenceElement>(null);
 
   useEffect(() => {
+    // Check if device is mobile or has coarse touch pointer (touch screen)
+    const isMobile =
+      typeof window !== "undefined" &&
+      (window.innerWidth <= 768 || window.matchMedia("(pointer: coarse)").matches);
+
+    // If mobile, completely bypass filter on <main> to save battery and ensure 100% scrolling fluidity
+    const mainEl = document.querySelector("main");
+    if (isMobile && mainEl) {
+      mainEl.style.filter = "none";
+      mainEl.style.transform = "none";
+      return; // Stop execution here
+    }
+
     let animationFrameId: number;
     let time = 0;
 
-    // Track displacement scale dynamics
-    let currentScale = 1.5; // Starts near static (idle text remains sharp)
+    let currentScale = 1.5;
     let targetScale = 1.5;
     const baseScale = 1.5;
 
-    // Track mouse speed
     let lastX = 0;
     let lastY = 0;
     let hasMoved = false;
@@ -30,7 +41,7 @@ export function FluidDistortion() {
       const dy = e.clientY - lastY;
       const speed = Math.hypot(dx, dy);
 
-      // Increase target scale based on cursor speed (cap at 22 for visual readability)
+      // Increase target scale based on speed (cap at 22 for visual readability)
       targetScale = Math.min(22, targetScale + speed * 0.18);
 
       lastX = e.clientX;
@@ -38,7 +49,6 @@ export function FluidDistortion() {
     };
 
     const handleClick = () => {
-      // Spike the distortion scale on mouse click for a ripple wave splash effect!
       targetScale = 40;
     };
 
@@ -51,14 +61,24 @@ export function FluidDistortion() {
       // Slowly decay target scale back to base idle float level
       targetScale += (baseScale - targetScale) * 0.06;
 
-      // Smoothly interpolate current scale to target scale (lerp)
+      // Lerp
       currentScale += (targetScale - currentScale) * 0.12;
 
-      // Modulate frequency to simulate organic flowing current
+      // Dynamic Performance Optimization:
+      // Turn filter off completely (none) when scale is at baseline to avoid repainting during scroll!
+      if (mainEl) {
+        if (currentScale > 1.55) {
+          mainEl.style.filter = "url(#water-displace)";
+          mainEl.style.transform = "translate3d(0,0,0)"; // GPU acceleration promotion
+        } else {
+          mainEl.style.filter = "none";
+          mainEl.style.transform = "none";
+        }
+      }
+
       const freqX = 0.012 + Math.sin(time * 0.8) * 0.003;
       const freqY = 0.025 + Math.cos(time * 0.5) * 0.005;
 
-      // Mutate DOM elements directly for maximum hardware-accelerated performance
       if (mapRef.current) {
         mapRef.current.setAttribute("scale", currentScale.toFixed(2));
       }
@@ -75,6 +95,10 @@ export function FluidDistortion() {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("click", handleClick);
       cancelAnimationFrame(animationFrameId);
+      if (mainEl) {
+        mainEl.style.filter = "none";
+        mainEl.style.transform = "none";
+      }
     };
   }, []);
 
@@ -86,7 +110,7 @@ export function FluidDistortion() {
             ref={turbRef}
             type="fractalNoise"
             baseFrequency="0.012 0.025"
-            numOctaves="1" // Fast rendering performance
+            numOctaves="1"
             result="noise"
           />
           <feDisplacementMap
