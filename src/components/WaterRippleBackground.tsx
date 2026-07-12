@@ -12,8 +12,8 @@ export function WaterRippleBackground() {
     if (!ctx) return;
 
     let animationFrameId: number;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    let width = canvas.width;
+    let height = canvas.height;
 
     // Track ripples
     type Ripple = {
@@ -29,120 +29,172 @@ export function WaterRippleBackground() {
     // Track mouse speed and state
     const mouse = { x: 0, y: 0, lastX: 0, lastY: 0, active: false };
 
-    const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
-    window.addEventListener("resize", handleResize);
+    // ResizeObserver to handle parent container sizes dynamically
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width: w, height: h } = entry.contentRect;
+        width = canvas.width = w;
+        height = canvas.height = h;
+      }
+    });
+
+    resizeObserver.observe(canvas);
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Get local coordinates relative to the viewport
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
 
-      if (!mouse.active) {
-        mouse.lastX = mouse.x;
-        mouse.lastY = mouse.y;
-        mouse.active = true;
-      }
+      // Only spawn ripples if cursor is inside the canvas element boundaries
+      if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+        mouse.x = x;
+        mouse.y = y;
 
-      const dist = Math.hypot(mouse.x - mouse.lastX, mouse.y - mouse.lastY);
-      if (dist > 25) {
-        ripples.push({
-          x: mouse.x,
-          y: mouse.y,
-          radius: 2,
-          maxRadius: Math.random() * 50 + 40,
-          opacity: 0.5,
-          speed: 1.2 + Math.random() * 1.0,
-        });
-        mouse.lastX = mouse.x;
-        mouse.lastY = mouse.y;
+        if (!mouse.active) {
+          mouse.lastX = mouse.x;
+          mouse.lastY = mouse.y;
+          mouse.active = true;
+        }
+
+        const dist = Math.hypot(mouse.x - mouse.lastX, mouse.y - mouse.lastY);
+        if (dist > 12) { // More sensitive to spawn ripples on mouse move
+          ripples.push({
+            x: mouse.x,
+            y: mouse.y,
+            radius: 2,
+            maxRadius: Math.random() * 40 + 35,
+            opacity: 0.7, // Higher starting opacity
+            speed: 1.0 + Math.random() * 0.8,
+          });
+          mouse.lastX = mouse.x;
+          mouse.lastY = mouse.y;
+        }
       }
     };
 
     const handleClick = (e: MouseEvent) => {
-      // Spawn two concentric ripples for click
-      ripples.push({
-        x: e.clientX,
-        y: e.clientY,
-        radius: 4,
-        maxRadius: Math.random() * 120 + 130,
-        opacity: 0.7,
-        speed: 2.0,
-      });
-      ripples.push({
-        x: e.clientX,
-        y: e.clientY,
-        radius: 12,
-        maxRadius: Math.random() * 100 + 100,
-        opacity: 0.6,
-        speed: 1.6,
-      });
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+        // Spawn 3 concentric ripples for click to make it look astonishing
+        ripples.push({
+          x: x,
+          y: y,
+          radius: 3,
+          maxRadius: Math.random() * 90 + 90,
+          opacity: 0.9,
+          speed: 1.6,
+        });
+        ripples.push({
+          x: x,
+          y: y,
+          radius: 10,
+          maxRadius: Math.random() * 70 + 70,
+          opacity: 0.8,
+          speed: 1.3,
+        });
+        ripples.push({
+          x: x,
+          y: y,
+          radius: 20,
+          maxRadius: Math.random() * 50 + 50,
+          opacity: 0.6,
+          speed: 1.0,
+        });
+      }
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("click", handleClick);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("click", handleClick, { passive: true });
 
     let time = 0;
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
-      time += 0.004;
+      time += 0.005;
 
-      // Draw bottom flowing liquid wave layers
       const isDark = theme === "dark";
-      const wave1Color = isDark ? "rgba(0, 212, 255, 0.03)" : "rgba(13, 45, 107, 0.02)";
-      const wave2Color = isDark ? "rgba(232, 119, 34, 0.02)" : "rgba(232, 119, 34, 0.015)";
+      
+      // Increased opacity for waves to be clearly visible
+      const wave1Color = isDark ? "rgba(0, 212, 255, 0.08)" : "rgba(13, 45, 107, 0.05)";
+      const wave2Color = isDark ? "rgba(232, 119, 34, 0.05)" : "rgba(232, 119, 34, 0.04)";
+      
+      // Crisp outline color
+      const stroke1Color = isDark ? "rgba(0, 212, 255, 0.15)" : "rgba(13, 45, 107, 0.1)";
+      const stroke2Color = isDark ? "rgba(232, 119, 34, 0.1)" : "rgba(232, 119, 34, 0.08)";
 
       // Wave 1
       ctx.fillStyle = wave1Color;
       ctx.beginPath();
       ctx.moveTo(0, height);
-      for (let x = 0; x <= width; x += 30) {
-        const y = height - 140 + Math.sin(x * 0.0025 + time * 1.8) * 35 + Math.cos(x * 0.0012 + time * 0.9) * 15;
+      for (let x = 0; x <= width; x += 15) {
+        const y = height - 55 + Math.sin(x * 0.005 + time * 1.5) * 20 + Math.cos(x * 0.002 + time * 0.8) * 10;
         ctx.lineTo(x, y);
       }
       ctx.lineTo(width, height);
       ctx.closePath();
       ctx.fill();
+
+      // Wave 1 outline stroke
+      ctx.strokeStyle = stroke1Color;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      for (let x = 0; x <= width; x += 15) {
+        const y = height - 55 + Math.sin(x * 0.005 + time * 1.5) * 20 + Math.cos(x * 0.002 + time * 0.8) * 10;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
 
       // Wave 2
       ctx.fillStyle = wave2Color;
       ctx.beginPath();
       ctx.moveTo(0, height);
-      for (let x = 0; x <= width; x += 30) {
-        const y = height - 100 + Math.sin(x * 0.0035 - time * 1.4) * 30 + Math.cos(x * 0.0018 - time * 0.7) * 10;
+      for (let x = 0; x <= width; x += 15) {
+        const y = height - 35 + Math.sin(x * 0.006 - time * 1.2) * 15 + Math.cos(x * 0.003 - time * 0.6) * 8;
         ctx.lineTo(x, y);
       }
       ctx.lineTo(width, height);
       ctx.closePath();
       ctx.fill();
 
+      // Wave 2 outline stroke
+      ctx.strokeStyle = stroke2Color;
+      ctx.lineWidth = 1.0;
+      ctx.beginPath();
+      for (let x = 0; x <= width; x += 15) {
+        const y = height - 35 + Math.sin(x * 0.006 - time * 1.2) * 15 + Math.cos(x * 0.003 - time * 0.6) * 8;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
       // Update and draw ripples
       ripples = ripples.filter((r) => {
         r.radius += r.speed;
-        r.opacity -= 0.008;
+        r.opacity -= 0.007; // Fades out slightly slower (approx 2.5 seconds)
 
         if (r.opacity <= 0) return false;
 
-        // Draw primary ring
+        // Draw primary ring (higher contrast)
         ctx.strokeStyle = isDark
-          ? `rgba(0, 212, 255, ${r.opacity * 0.4})`
-          : `rgba(13, 45, 107, ${r.opacity * 0.3})`;
-        ctx.lineWidth = 1.5;
+          ? `rgba(0, 212, 255, ${r.opacity * 0.7})`
+          : `rgba(13, 45, 107, ${r.opacity * 0.6})`;
+        ctx.lineWidth = 2.0; // Thicker ring lines
         ctx.beginPath();
         ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
         ctx.stroke();
 
         // Draw secondary ring
-        if (r.radius > 20) {
+        if (r.radius > 15) {
           ctx.strokeStyle = isDark
-            ? `rgba(232, 119, 34, ${r.opacity * 0.25})`
-            : `rgba(232, 119, 34, ${r.opacity * 0.2})`;
+            ? `rgba(232, 119, 34, ${r.opacity * 0.4})`
+            : `rgba(232, 119, 34, ${r.opacity * 0.3})`;
+          ctx.lineWidth = 1.5;
           ctx.beginPath();
-          ctx.arc(r.x, r.y, r.radius - 15, 0, Math.PI * 2);
+          ctx.arc(r.x, r.y, r.radius - 12, 0, Math.PI * 2);
           ctx.stroke();
         }
 
@@ -155,7 +207,7 @@ export function WaterRippleBackground() {
     render();
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      resizeObserver.disconnect();
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("click", handleClick);
       cancelAnimationFrame(animationFrameId);
