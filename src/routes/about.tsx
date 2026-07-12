@@ -46,7 +46,7 @@ function AboutPage() {
       </section>
 
       {/* VISION & MISSION */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-card">
         <div className="mx-auto max-w-6xl px-6 grid md:grid-cols-2 gap-6">
           {[
             { icon: Eye, title: "Our Vision", body: "To become Africa's most innovative technology company — building products and platforms that astonish users, empower businesses, and transform communities across the continent and beyond." },
@@ -60,7 +60,7 @@ function AboutPage() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="rounded-2xl p-8 bg-soft border border-border/60 hover:border-secondary/40 transition"
             >
-              <div className="h-14 w-14 grid place-items-center hex-pointy bg-primary text-white">
+              <div className="h-14 w-14 grid place-items-center hex-pointy bg-primary text-white dark:text-primary-foreground">
                 <b.icon className="h-7 w-7" />
               </div>
               <h3 className="mt-5 text-xl font-bold text-primary">{b.title}</h3>
@@ -96,7 +96,7 @@ function AboutPage() {
       </section>
 
       {/* CORPORATE PROFILE & LEGAL */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-card">
         <div className="mx-auto max-w-6xl px-6">
           <SectionTitle>Corporate Context</SectionTitle>
           <div className="grid md:grid-cols-2 gap-8 items-center">

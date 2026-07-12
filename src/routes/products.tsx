@@ -64,7 +64,7 @@ function ProductsPage() {
       </section>
 
       {/* PIPELINE CARDS */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-card">
         <div className="mx-auto max-w-6xl px-6">
           <SectionTitle>Stealth Projects</SectionTitle>
           <div className="grid md:grid-cols-3 gap-6">
@@ -113,7 +113,7 @@ function ProductsPage() {
                 className="relative"
               >
                 {/* Node indicator */}
-                <div className="absolute -left-[41px] top-1.5 h-6 w-6 rounded-full bg-white border-4 border-primary flex items-center justify-center">
+                <div className="absolute -left-[41px] top-1.5 h-6 w-6 rounded-full bg-card border-4 border-primary flex items-center justify-center">
                   <div className="h-2 w-2 rounded-full bg-secondary" />
                 </div>
                 <div>
@@ -131,7 +131,7 @@ function ProductsPage() {
       </section>
 
       {/* STRATEGIC CAPABILITIES */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-card">
         <div className="mx-auto max-w-6xl px-6">
           <SectionTitle>Platform Ecosystem</SectionTitle>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">

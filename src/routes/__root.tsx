@@ -4,6 +4,9 @@ import { useEffect } from "react";
 import appCss from "../styles.css?url";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { ThemeProvider } from "../hooks/useTheme";
+import { GlobalWaterRipple } from "../components/GlobalWaterRipple";
+import { FluidDistortion } from "../components/FluidDistortion";
 
 function NotFoundComponent() {
   return (
@@ -21,8 +24,8 @@ function NotFoundComponent() {
             The page you're looking for seems to have flown away like a busy bee!
           </p>
           <div className="mt-8 flex gap-3 justify-center">
-            <Link to="/" className="px-6 py-3 rounded-md bg-[var(--ink)] text-white font-semibold hover:bg-primary transition-colors">Go Home</Link>
-            <Link to="/contact" className="px-6 py-3 rounded-md border-2 border-primary text-primary font-semibold hover:bg-primary hover:text-white transition-colors">Contact Us</Link>
+            <Link to="/" className="px-6 py-3 rounded-md bg-[var(--ink)] text-white font-semibold hover:bg-primary dark:hover:text-primary-foreground transition-colors">Go Home</Link>
+            <Link to="/contact" className="px-6 py-3 rounded-md border-2 border-primary text-primary font-semibold hover:bg-primary hover:text-white dark:hover:text-primary-foreground transition-colors">Contact Us</Link>
           </div>
         </div>
       </main>
@@ -72,9 +75,34 @@ function RootShell({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          id="theme-initializer"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var saved = localStorage.getItem('theme');
+                  var theme = saved;
+                  if (!theme) {
+                    var hour = new Date().getHours();
+                    theme = (hour >= 18 || hour < 6) ? 'dark' : 'light';
+                  }
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `
+          }}
+        />
       </head>
       <body>
-        {children}
+        <ThemeProvider>
+          <GlobalWaterRipple />
+          {children}
+        </ThemeProvider>
         <Scripts />
       </body>
     </html>
@@ -122,8 +150,9 @@ function RootComponent() {
 
   return (
     <div className="select-none">
+      <FluidDistortion />
       <SiteHeader />
-      <main className="pt-24 select-text"> {/* Allow select-text for normal copy-pastable main sections if desired, or override select-none inside routes */}
+      <main className="pt-32 select-text" style={{ filter: "url(#water-displace)" }}>
         <Outlet />
       </main>
       <SiteFooter />
