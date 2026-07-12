@@ -101,7 +101,7 @@ function ServicesPage() {
       </section>
 
       {SERVICES.map((s, idx) => (
-        <section key={s.id} id={s.id} className={`py-20 ${idx % 2 ? "bg-white" : "bg-soft"} relative scroll-mt-32`}>
+        <section key={s.id} id={s.id} className={`py-20 ${idx % 2 ? "bg-card" : "bg-soft"} relative scroll-mt-32`}>
           <div className="mx-auto max-w-6xl px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -126,25 +126,25 @@ function ServicesPage() {
                   transition={{ duration: 0.5, delay: i * 0.1 }}
                   className={`relative rounded-2xl p-7 border transition hover:-translate-y-1 ${
                     i === 0 && s.cards.length > 1
-                      ? "bg-primary text-white border-primary shadow-xl"
+                      ? "bg-primary text-white dark:text-primary-foreground border-primary shadow-xl"
                       : "bg-card border-border/60 hover:border-secondary/40 hover:shadow-lg"
                   }`}
                 >
-                  <div className={`h-12 w-12 grid place-items-center hex-pointy ${i === 0 && s.cards.length > 1 ? "bg-white/15 text-white" : "bg-secondary/10 text-secondary"}`}>
+                  <div className={`h-12 w-12 grid place-items-center hex-pointy ${i === 0 && s.cards.length > 1 ? "bg-white/15 text-white dark:bg-primary-foreground/15 dark:text-primary-foreground" : "bg-secondary/10 text-secondary"}`}>
                     <c.icon className="h-6 w-6" />
                   </div>
-                  <h3 className={`mt-4 text-lg font-bold ${i === 0 && s.cards.length > 1 ? "text-white" : "text-primary"}`}>{c.title}</h3>
+                  <h3 className={`mt-4 text-lg font-bold ${i === 0 && s.cards.length > 1 ? "text-white dark:text-primary-foreground" : "text-primary"}`}>{c.title}</h3>
                   {"items" in c && c.items ? (
                     <ul className="mt-3 space-y-2 text-sm">
                       {c.items.map((it) => (
                         <li key={it} className="flex items-start gap-2">
                           <span className={`mt-1.5 h-1.5 w-1.5 rounded-full flex-shrink-0 ${i === 0 && s.cards.length > 1 ? "bg-secondary" : "bg-primary"}`} />
-                          <span className={i === 0 && s.cards.length > 1 ? "text-white/90" : "text-foreground/80"}>{it}</span>
+                          <span className={i === 0 && s.cards.length > 1 ? "text-white/90 dark:text-primary-foreground/90" : "text-foreground/80"}>{it}</span>
                         </li>
                       ))}
                     </ul>
                   ) : (
-                    <p className={`mt-3 text-sm leading-relaxed ${i === 0 && s.cards.length > 1 ? "text-white/90" : "text-foreground/80"}`}>{c.body}</p>
+                    <p className={`mt-3 text-sm leading-relaxed ${i === 0 && s.cards.length > 1 ? "text-white/90 dark:text-primary-foreground/90" : "text-foreground/80"}`}>{c.body}</p>
                   )}
                 </motion.div>
               ))}

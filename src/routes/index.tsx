@@ -64,7 +64,7 @@ function Home() {
               </Link>
               <Link
                 to="/products"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-md border-2 border-primary text-primary font-semibold hover:bg-primary hover:text-white hover:-translate-y-0.5 transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-md border-2 border-primary text-primary font-semibold hover:bg-primary hover:text-white dark:hover:text-primary-foreground hover:-translate-y-0.5 transition-all"
               >
                 Product Pipeline
               </Link>
@@ -115,7 +115,7 @@ function Home() {
       </section>
 
       {/* SECTORS */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-card">
         <div className="mx-auto max-w-6xl px-6">
           <SectionTitle>Target Sectors & Partners</SectionTitle>
           <p className="text-center max-w-3xl mx-auto text-muted-foreground">
@@ -189,7 +189,7 @@ function Home() {
               </ul>
               <Link
                 to="/products"
-                className="mt-7 inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-primary text-white font-semibold hover:bg-primary-deep transition-colors"
+                className="mt-7 inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-primary text-white dark:text-primary-foreground font-semibold hover:bg-primary-deep dark:hover:text-white transition-colors"
               >
                 View Product Strategy <ArrowRight className="h-4 w-4" />
               </Link>

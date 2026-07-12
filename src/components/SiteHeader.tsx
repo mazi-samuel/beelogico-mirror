@@ -1,8 +1,9 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X, Facebook, Instagram } from "lucide-react";
+import { Menu, X, Facebook, Instagram, Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { JTLLogo } from "./JTLLogo";
+import { useTheme } from "../hooks/useTheme";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -18,6 +19,12 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -43,27 +50,43 @@ export function SiteHeader() {
               <JTLLogo className="h-16 md:h-20 py-0" />
             </Link>
 
-            <nav className="hidden lg:flex items-center gap-7">
-              {NAV.map((item) => (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className="relative text-sm font-medium text-foreground/70 hover:text-primary transition-colors"
-                  activeProps={{ className: "text-foreground font-semibold" }}
-                  activeOptions={{ exact: item.to === "/" }}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+            <div className="flex items-center gap-4 lg:gap-7">
+              <nav className="hidden lg:flex items-center gap-7">
+                {NAV.map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className="relative text-sm font-medium text-foreground/70 hover:text-primary transition-colors"
+                    activeProps={{ className: "text-foreground font-semibold" }}
+                    activeOptions={{ exact: item.to === "/" }}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
 
-            <button
-              onClick={() => setOpen((o) => !o)}
-              className="lg:hidden p-2 -mr-2 text-foreground relative z-50"
-              aria-label="Toggle menu"
-            >
-              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
+              <button
+                onClick={toggleTheme}
+                className="p-2.5 rounded-full bg-slate-50/50 dark:bg-slate-900/40 border border-border/40 dark:border-border/10 hover:bg-slate-100 dark:hover:bg-slate-800 text-foreground/80 hover:text-primary dark:hover:text-accent transition-all duration-300 shadow-sm relative cursor-pointer"
+                aria-label="Toggle theme"
+              >
+                {!mounted ? (
+                  <div className="h-4 w-4" />
+                ) : theme === "dark" ? (
+                  <Sun className="h-4 w-4 text-amber-500" />
+                ) : (
+                  <Moon className="h-4 w-4" />
+                )}
+              </button>
+
+              <button
+                onClick={() => setOpen((o) => !o)}
+                className="lg:hidden p-2 -mr-2 text-foreground relative z-50"
+                aria-label="Toggle menu"
+              >
+                {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
+            </div>
           </div>
         </div>
       </header>
