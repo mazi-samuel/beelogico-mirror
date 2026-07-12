@@ -15,21 +15,26 @@ export function FluidDistortion() {
     if (isMobile && mainEl) {
       mainEl.style.filter = "none";
       mainEl.style.transform = "none";
-      return; // Stop execution here
+      return;
     }
 
     let animationFrameId: number;
     let time = 0;
 
-    let currentScale = 1.5;
-    let targetScale = 1.5;
-    const baseScale = 1.5;
+    const baseScale = 12; // Constant underwater waving scale when idle
+    let currentScale = baseScale;
+    let targetScale = baseScale;
 
     let lastX = 0;
     let lastY = 0;
     let hasMoved = false;
+    let isScrolling = false;
+    let scrollTimeout: number;
 
+    // Track cursor speed to increase wave intensity
     const handleMouseMove = (e: MouseEvent) => {
+      if (isScrolling) return;
+
       if (!hasMoved) {
         lastX = e.clientX;
         lastY = e.clientY;
@@ -41,41 +46,61 @@ export function FluidDistortion() {
       const dy = e.clientY - lastY;
       const speed = Math.hypot(dx, dy);
 
-      // Increase target scale based on speed (cap at 22 for visual readability)
-      targetScale = Math.min(22, targetScale + speed * 0.18);
+      // Increase target scale based on speed (cap at 24)
+      targetScale = Math.min(24, targetScale + speed * 0.15);
 
       lastX = e.clientX;
       lastY = e.clientY;
     };
 
     const handleClick = () => {
+      if (isScrolling) return;
+      // Spike the scale on click
       targetScale = 40;
+    };
+
+    // Scroll performance listener:
+    // Temporarily turn down displacement to 0 during scroll to maintain 60 FPS page scrolling,
+    // and restore the wavy underwater float immediately when scrolling stops.
+    const handleScroll = () => {
+      isScrolling = true;
+      targetScale = 0;
+
+      window.clearTimeout(scrollTimeout);
+      scrollTimeout = window.setTimeout(() => {
+        isScrolling = false;
+        targetScale = baseScale;
+      }, 120); // Restore waves 120ms after scroll stops
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("click", handleClick, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     const animate = () => {
       time += 0.005;
 
-      // Slowly decay target scale back to base idle float level
-      targetScale += (baseScale - targetScale) * 0.06;
+      if (!isScrolling) {
+        // Slowly decay target scale back to constant float level (12)
+        targetScale += (baseScale - targetScale) * 0.05;
+      }
 
-      // Lerp
+      // Lerp currentScale towards targetScale
       currentScale += (targetScale - currentScale) * 0.12;
 
       // Dynamic Performance Optimization:
-      // Turn filter off completely (none) when scale is at baseline to avoid repainting during scroll!
+      // Turn filter off completely (none) when scale is tiny to avoid CPU/GPU overhead
       if (mainEl) {
-        if (currentScale > 1.55) {
+        if (currentScale > 1.5) {
           mainEl.style.filter = "url(#water-displace)";
-          mainEl.style.transform = "translate3d(0,0,0)"; // GPU acceleration promotion
+          mainEl.style.transform = "translate3d(0,0,0)"; // GPU layer promotion
         } else {
           mainEl.style.filter = "none";
           mainEl.style.transform = "none";
         }
       }
 
+      // Modulate frequency to simulate organic flowing current
       const freqX = 0.012 + Math.sin(time * 0.8) * 0.003;
       const freqY = 0.025 + Math.cos(time * 0.5) * 0.005;
 
@@ -94,6 +119,8 @@ export function FluidDistortion() {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("click", handleClick);
+      window.removeEventListener("scroll", handleScroll);
+      window.clearTimeout(scrollTimeout);
       cancelAnimationFrame(animationFrameId);
       if (mainEl) {
         mainEl.style.filter = "none";
@@ -117,7 +144,7 @@ export function FluidDistortion() {
             ref={mapRef}
             in="SourceGraphic"
             in2="noise"
-            scale="1.5"
+            scale="12"
             xChannelSelector="R"
             yChannelSelector="G"
           />
