@@ -10,8 +10,8 @@ export function SiteFooter() {
         <div className="md:col-span-2">
           <JTLLogo useImage={true} className="h-16 brightness-0 invert" />
           <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65">
-            Juruanya Technologies Limited (JTL) is a Lagos-based technology startup building 
-            innovative software solutions, digital platforms, SaaS products, AI/ML, and technology 
+            Juruanya Technologies Limited (JTL) is a Lagos-based technology startup building
+            innovative software solutions, digital platforms, SaaS products, AI/ML, and technology
             hardware products that astonish.
           </p>
           <div className="mt-6 flex gap-3">
@@ -42,6 +42,26 @@ export function SiteFooter() {
             >
               <Instagram className="h-4 w-4" />
             </a>
+            <a
+              href="https://vt.tiktok.com/ZSXPaJyKo/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="grid h-9 w-9 place-items-center rounded-full border border-white/15 hover:bg-secondary hover:border-secondary transition text-white/80 hover:text-white"
+              title="TikTok"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4"
+              >
+                <path d="M19 8.78c-1.58.1-2.92-.85-3.32-2.28V14.5c0 2.48-2.02 4.5-4.5 4.5s-4.5-2.02-4.5-4.5 2.02-4.5 4.5-4.5c.34 0 .67.03 1 .1v2.52c-.32-.06-.65-.1-.99-.1-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5V3h3.5c.1 1.58 1.1 2.5 2.5 2.5V8.78z" />
+              </svg>
+            </a>
           </div>
         </div>
 
@@ -67,9 +87,15 @@ export function SiteFooter() {
         <div>
           <h4 className="text-white font-semibold mb-4">Get in touch</h4>
           <ul className="space-y-3 text-sm">
-            <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-secondary" /> +234 904 569 2072</li>
-            <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-secondary" /> info@juruanyatechnologies.com</li>
-            <li className="flex items-center gap-2"><Clock className="h-4 w-4 text-secondary" /> Mon – Fri, 8am – 5pm</li>
+            <li className="flex items-center gap-2">
+              <Phone className="h-4 w-4 text-secondary" /> +234 904 569 2072
+            </li>
+            <li className="flex items-center gap-2">
+              <Mail className="h-4 w-4 text-secondary" /> info@juruanyatechnologies.com
+            </li>
+            <li className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-secondary" /> Mon – Fri, 8am – 5pm
+            </li>
             <li className="flex items-start gap-2">
               <MapPin className="h-4 w-4 text-secondary mt-0.5 flex-shrink-0" />
               <span>90 Akanro Street, Ilasamaja, Lagos, Nigeria</span>
@@ -79,7 +105,10 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-6xl px-6 py-5 text-xs text-white/55 flex flex-col sm:flex-row gap-2 justify-between">
-          <span>© {new Date().getFullYear()} Juruanya Technologies Limited. All rights reserved. (RC: 9600871 · TIN: 2622426624523)</span>
+          <span>
+            © {new Date().getFullYear()} Juruanya Technologies Limited. All rights reserved. (RC:
+            9600871 · TIN: 2622426624523)
+          </span>
           <span>Crafted with care in Lagos · Nigeria</span>
         </div>
       </div>
