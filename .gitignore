@@ -36,3 +36,10 @@ dist-ssr
 
 # Letterhead templates / scratch
 letterhead.html
+.vercel
+.env*
+
+# Marketplace integration reference docs (auto-installed, not project source)
+.agents/
+.claude/skills/
+skills-lock.json

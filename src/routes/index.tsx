@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Code2, Cpu, Smartphone, Palette, ShieldAlert } from "lucide-react";
 import { SectionTitle } from "@/components/SectionTitle";
 import { HexBackground } from "@/components/HexBackground";
+import { LeadCaptureForm } from "@/components/LeadCaptureForm";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -269,6 +270,19 @@ function Home() {
                 <p className="mt-3 text-sm font-medium text-foreground/85 leading-relaxed">{e}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* NEWSLETTER / LEAD CAPTURE */}
+      <section className="py-20 bg-soft">
+        <div className="mx-auto max-w-3xl px-6 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold">Stay in the <span className="text-gradient">loop</span></h2>
+          <p className="mt-4 text-muted-foreground">
+            Get product updates, case studies, and early access to what we're building — straight to your inbox.
+          </p>
+          <div className="mt-8 text-left">
+            <LeadCaptureForm source="homepage-newsletter" />
           </div>
         </div>
       </section>

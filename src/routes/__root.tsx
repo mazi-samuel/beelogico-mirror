@@ -1,5 +1,7 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { Analytics } from "@vercel/analytics/react";
+import { ClerkProvider } from "@clerk/tanstack-react-start";
 
 import appCss from "../styles.css?url";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -99,10 +101,13 @@ function RootShell({ children }: { children: React.ReactNode }) {
         />
       </head>
       <body>
-        <ThemeProvider>
-          <GlobalWaterRipple />
-          {children}
-        </ThemeProvider>
+        <ClerkProvider>
+          <ThemeProvider>
+            <GlobalWaterRipple />
+            {children}
+          </ThemeProvider>
+        </ClerkProvider>
+        <Analytics />
         <Scripts />
       </body>
     </html>
