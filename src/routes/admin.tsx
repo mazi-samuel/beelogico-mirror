@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Show, SignIn, UserButton } from "@clerk/tanstack-react-start";
+import { ClerkProvider, Show, SignIn, UserButton } from "@clerk/tanstack-react-start";
 import { getLeads, type Lead } from "@/lib/leads";
 
 export const Route = createFileRoute("/admin")({
@@ -13,21 +13,26 @@ export const Route = createFileRoute("/admin")({
   component: AdminPage,
 });
 
+// Clerk is scoped to this route only (not the root layout) so regular site
+// visitors never load Clerk's script or get its cookies — only people who
+// actually navigate to /admin do.
 function AdminPage() {
   return (
-    <main className="min-h-screen pt-32 pb-20 px-6 bg-soft">
-      <div className="mx-auto max-w-5xl">
-        <Show when="signed-out">
-          <div className="mx-auto max-w-sm">
-            <h1 className="mb-6 text-center text-2xl font-bold">Admin sign in</h1>
-            <SignIn />
-          </div>
-        </Show>
-        <Show when="signed-in">
-          <AdminDashboard />
-        </Show>
-      </div>
-    </main>
+    <ClerkProvider>
+      <main className="min-h-screen pt-32 pb-20 px-6 bg-soft">
+        <div className="mx-auto max-w-5xl">
+          <Show when="signed-out">
+            <div className="mx-auto max-w-sm">
+              <h1 className="mb-6 text-center text-2xl font-bold">Admin sign in</h1>
+              <SignIn />
+            </div>
+          </Show>
+          <Show when="signed-in">
+            <AdminDashboard />
+          </Show>
+        </div>
+      </main>
+    </ClerkProvider>
   );
 }
 
