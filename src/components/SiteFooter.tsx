@@ -98,12 +98,27 @@ export function SiteFooter() {
             </li>
             <li className="flex items-start gap-2">
               <MapPin className="h-4 w-4 text-secondary mt-0.5 flex-shrink-0" />
-              <span>
-                90 Akanro Street, Ilasamaja, Lagos, Nigeria
-                <br />
-                Costain Hub: Industrial Training Fund (ITF) House, Plot 12, Funsho Williams Avenue,
-                Iponri, Surulere / Costain, Lagos
-              </span>
+              <div className="space-y-2">
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=90%20Akanro%20Street%2C%20Ilasamaja%2C%20Lagos%2C%20Nigeria"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block hover:text-secondary transition-colors"
+                >
+                  <span className="block font-semibold text-white/90">Ilasamaja Office</span>
+                  90 Akanro Street, Ilasamaja, Lagos, Nigeria
+                </a>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Industrial%20Training%20Fund%20%28ITF%29%20House%2C%20Plot%2012%2C%20Funsho%20Williams%20Avenue%2C%20Iponri%2C%20Surulere%20%2F%20Costain%2C%20Lagos"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block hover:text-secondary transition-colors"
+                >
+                  <span className="block font-semibold text-white/90">Costain Hub</span>
+                  Industrial Training Fund (ITF) House, Plot 12, Funsho Williams Avenue, Iponri,
+                  Surulere / Costain, Lagos
+                </a>
+              </div>
             </li>
           </ul>
         </div>

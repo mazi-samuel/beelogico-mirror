@@ -45,11 +45,6 @@ function ContactPage() {
               { icon: Phone, label: "Phone", value: "+234 904 569 2072" },
               { icon: Mail, label: "Email", value: "info@juruanyatechnologies.com" },
               { icon: Clock, label: "Office Hours", value: "Mon – Fri · 8:00 am – 5:00 pm" },
-              {
-                icon: MapPin,
-                label: "Office Addresses",
-                value: "90 Akanro Street, Ilasamaja, Lagos, Nigeria\nCostain Hub: Industrial Training Fund (ITF) House, Plot 12, Funsho Williams Avenue, Iponri, Surulere / Costain, Lagos",
-              },
               { icon: Building, label: "Legal Info", value: "RC: 9600871 · TIN: 2622426624523" },
             ].map((c) => (
               <div key={c.label} className="flex items-start gap-4 p-5 rounded-xl bg-card border border-border/60">
@@ -58,10 +53,41 @@ function ContactPage() {
                 </div>
                 <div>
                   <p className="text-[10px] font-mono font-semibold uppercase tracking-wider text-muted-foreground">{c.label}</p>
-                  <p className="text-foreground text-sm font-medium leading-relaxed whitespace-pre-line">{c.value}</p>
+                  <p className="text-foreground text-sm font-medium leading-relaxed">{c.value}</p>
                 </div>
               </div>
             ))}
+            <div className="flex items-start gap-4 p-5 rounded-xl bg-card border border-border/60">
+              <div className="h-11 w-11 grid place-items-center hex-pointy bg-secondary text-white flex-shrink-0">
+                <MapPin className="h-5 w-5" />
+              </div>
+              <div className="space-y-4">
+                <p className="text-[10px] font-mono font-semibold uppercase tracking-wider text-muted-foreground">
+                  Office Addresses
+                </p>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=90%20Akanro%20Street%2C%20Ilasamaja%2C%20Lagos%2C%20Nigeria"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-sm font-medium leading-relaxed hover:text-secondary transition-colors"
+                >
+                  <span className="block font-semibold text-foreground">Ilasamaja Office</span>
+                  90 Akanro Street, Ilasamaja, Lagos, Nigeria
+                  <span className="block text-xs text-muted-foreground mt-1">Open in Google Maps</span>
+                </a>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Industrial%20Training%20Fund%20%28ITF%29%20House%2C%20Plot%2012%2C%20Funsho%20Williams%20Avenue%2C%20Iponri%2C%20Surulere%20%2F%20Costain%2C%20Lagos"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-sm font-medium leading-relaxed hover:text-secondary transition-colors"
+                >
+                  <span className="block font-semibold text-foreground">Costain Hub</span>
+                  Industrial Training Fund (ITF) House, Plot 12, Funsho Williams Avenue, Iponri,
+                  Surulere / Costain, Lagos
+                  <span className="block text-xs text-muted-foreground mt-1">Open in Google Maps</span>
+                </a>
+              </div>
+            </div>
           </motion.div>
 
           <motion.div
