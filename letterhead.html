@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JTL – Official Letterhead</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy:    #0d2d6b;
+      --navy-dk: #071b45;
+      --orange:  #e87722;
+      --cyan:    #00d4ff;
+      --ink:     #060f20;
+      --paper:   #ffffff;
+      --muted:   #6b7fa3;
+      --border:  #dde3ee;
+      --font:    'Poppins', 'Segoe UI', sans-serif;
+      --mono:    'JetBrains Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: #e8edf6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 0 60px;
+      color: var(--ink);
+    }
+
+    /* ====== TOOLBAR ====== */
+    #toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+      background: var(--navy-dk);
+      border-bottom: 2px solid var(--orange);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 24px;
+      flex-wrap: wrap;
+    }
+    .toolbar-brand {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--cyan);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-right: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toolbar-brand span { color: white; }
+    .toolbar-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 6px;
+      border: none;
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      letter-spacing: 0.02em;
+    }
+    .btn-primary { background: var(--orange); color: white; }
+    .btn-primary:hover { background: #d06317; transform: translateY(-1px); }
+    .btn-ghost { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.15); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.16); }
+    .toolbar-separator { width: 1px; height: 28px; background: rgba(255,255,255,0.12); }
+    .toolbar-label { font-size: 11px; color: rgba(255,255,255,0.5); font-family: var(--mono); }
+
+    /* ====== FORMAT BAR ====== */
+    #format-bar {
+      width: 100%;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 6px 24px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .fmt-btn {
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,0.7);
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .fmt-btn:hover { background: rgba(255,255,255,0.12); color: white; }
+    .fmt-select {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white;
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      outline: none;
+    }
+    .fmt-select option { background: var(--navy); }
+    .fmt-divider { width: 1px; height: 22px; background: rgba(255,255,255,0.1); margin: 0 4px; }
+    .color-picker-wrap { display: flex; align-items: center; gap: 4px; }
+    .color-picker-wrap label { font-size: 11px; color: rgba(255,255,255,0.55); }
+    .color-picker-wrap input[type="color"] { width: 24px; height: 24px; border: none; border-radius: 4px; cursor: pointer; padding: 0; background: none; }
+
+    /* ====== LETTER SHEET ====== */
+    #letter-wrapper {
+      margin-top: 28px;
+      width: 820px;
+      max-width: 96vw;
+      filter: drop-shadow(0 8px 40px rgba(13,45,107,0.22));
+    }
+    #letter {
+      background: var(--paper);
+      width: 100%;
+      min-height: 1060px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* WATERMARK */
+    .watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      opacity: 0.045;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* HEADER */
+    .letter-header { position: relative; z-index: 1; background: var(--navy-dk); overflow: hidden; }
+    .header-inner { display: flex; align-items: stretch; min-height: 110px; }
+    .header-logo-col {
+      display: flex; align-items: center; padding: 22px 30px 22px 32px;
+      gap: 16px; flex-shrink: 0; border-right: 2px solid rgba(255,255,255,0.07);
+    }
+    .header-logo-svg { width: 68px; height: 68px; flex-shrink: 0; }
+    .header-name-block { line-height: 1; }
+    .header-company-name { font-size: 18px; font-weight: 800; color: white; letter-spacing: -0.02em; }
+    .header-company-sub { font-size: 10.5px; font-weight: 500; color: var(--cyan); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 4px; }
+    .header-tagline { font-family: var(--mono); font-size: 9.5px; font-weight: 600; color: var(--orange); margin-top: 8px; letter-spacing: 0.12em; text-transform: uppercase; }
+    .header-contact-col { flex: 1; display: flex; align-items: center; justify-content: flex-end; padding: 22px 32px; gap: 24px; }
+    .contact-item { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+    .contact-item .ci-label { font-family: var(--mono); font-size: 8.5px; font-weight: 600; color: var(--cyan); letter-spacing: 0.14em; text-transform: uppercase; }
+    .contact-item .ci-value { font-size: 11px; color: rgba(255,255,255,0.85); font-weight: 500; }
+    .header-stripe { height: 4px; background: linear-gradient(90deg, var(--orange) 0%, var(--cyan) 50%, var(--orange) 100%); }
+    .header-hex-bg { position: absolute; right: 0; top: 0; bottom: 0; width: 320px; pointer-events: none; opacity: 0.06; }
+
+    /* META BAR */
+    .meta-bar {
+      position: relative; z-index: 1;
+      background: #f6f8fc; border-bottom: 1px solid var(--border);
+      padding: 10px 36px; display: flex; gap: 32px; align-items: center; flex-wrap: wrap;
+    }
+    .meta-field { display: flex; align-items: center; gap: 8px; font-size: 11.5px; }
+    .meta-label { font-family: var(--mono); font-size: 9.5px; font-weight: 600; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+    .meta-value { font-size: 12px; font-weight: 600; color: var(--navy); border: none; outline: none; background: transparent; font-family: var(--font); min-width: 80px; }
+    .meta-value:focus { background: #fffde8; border-radius: 4px; padding: 2px 6px; }
+    .meta-divider { width: 1px; height: 22px; background: var(--border); }
+
+    /* BODY */
+    .letter-body { position: relative; z-index: 1; padding: 36px 46px 32px; }
+    .recipient-block { margin-bottom: 28px; }
+    .recipient-block .to-label { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .editable-field {
+      font-size: 13.5px; font-weight: 500; color: var(--ink); outline: none; border: none;
+      background: transparent; width: 100%; font-family: var(--font); display: block;
+      line-height: 1.7; border-bottom: 1px dashed transparent; transition: border-color 0.2s;
+    }
+    .editable-field:focus { border-bottom-color: var(--cyan); background: rgba(0,212,255,0.03); }
+    .editable-field[placeholder]:empty::before { content: attr(placeholder); color: #bdc5d5; font-style: italic; }
+    .subject-bar {
+      background: linear-gradient(90deg, var(--navy) 0%, var(--navy-dk) 100%);
+      padding: 11px 36px 11px 46px; margin: 0 -46px;
+      display: flex; align-items: center; gap: 14px; position: relative; z-index: 1;
+    }
+    .subject-label { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange); white-space: nowrap; }
+    .subject-text { font-size: 13px; font-weight: 700; color: white; outline: none; border: none; background: transparent; flex: 1; font-family: var(--font); letter-spacing: -0.01em; }
+    .subject-text[placeholder]:empty::before { content: attr(placeholder); color: rgba(255,255,255,0.3); font-style: italic; font-weight: 400; }
+    #letter-content { margin-top: 26px; font-size: 13.5px; line-height: 1.85; color: var(--ink); outline: none; min-height: 380px; position: relative; z-index: 1; }
+    #letter-content:focus { outline: none; }
+    #letter-content[placeholder]:empty::before { content: attr(placeholder); color: #c2cade; font-style: italic; pointer-events: none; }
+    #letter-content p { margin-bottom: 12px; }
+    #letter-content ul, #letter-content ol { padding-left: 22px; margin-bottom: 12px; }
+    .salutation-line {
+      font-size: 13.5px; font-weight: 500; color: var(--ink); margin-bottom: 18px;
+      outline: none; border: none; background: transparent; width: 100%; font-family: var(--font);
+      border-bottom: 1px dashed transparent; transition: border-color 0.2s; display: block;
+    }
+    .salutation-line:focus { border-bottom-color: var(--cyan); }
+
+    /* SIGNATURE */
+    .signature-section {
+      position: relative; z-index: 1; padding: 28px 46px 30px;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 20px;
+    }
+    .sig-left { flex: 1; }
+    .sig-closing { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 48px; outline: none; display: block; font-family: var(--font); }
+    .sig-line { width: 180px; height: 1px; background: var(--navy); margin-bottom: 8px; }
+    .sig-name { font-size: 13px; font-weight: 700; color: var(--navy); outline: none; display: block; font-family: var(--font); }
+    .sig-title { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--orange); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; display: block; outline: none; }
+    .sig-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+    .sig-stamp {
+      width: 88px; height: 88px; border-radius: 50%; border: 3px solid var(--navy);
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      padding: 8px; position: relative; overflow: hidden;
+    }
+    .sig-stamp::before { content: ''; position: absolute; inset: 3px; border-radius: 50%; border: 1.5px dashed var(--orange); }
+    .sig-stamp-inner { font-family: var(--mono); font-size: 6px; font-weight: 700; color: var(--navy); text-align: center; letter-spacing: 0.12em; text-transform: uppercase; position: relative; z-index: 1; }
+
+    /* LEFT STRIP */
+    .left-strip { position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(to bottom, var(--orange), var(--navy), var(--cyan)); z-index: 2; }
+
+    /* FOOTER */
+    .letter-footer { position: relative; z-index: 1; }
+    .footer-accent { height: 3px; background: linear-gradient(90deg, var(--cyan), var(--orange), var(--cyan)); }
+    .footer-inner { background: var(--navy-dk); padding: 14px 36px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .footer-left { display: flex; flex-direction: column; gap: 2px; }
+    .footer-addr { font-size: 9.5px; color: rgba(255,255,255,0.6); font-weight: 400; }
+    .footer-rc { font-family: var(--mono); font-size: 8.5px; color: rgba(255,255,255,0.35); letter-spacing: 0.06em; }
+    .footer-center { font-family: var(--mono); font-size: 8.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); }
+    .footer-right { font-size: 9px; color: rgba(255,255,255,0.45); text-align: right; }
+    .footer-page-num { font-family: var(--mono); font-size: 9px; color: var(--cyan); }
+
+    /* EDIT HINT */
+    .edit-hint {
+      position: fixed; bottom: 24px; right: 28px; background: var(--navy-dk);
+      border: 1px solid var(--orange); color: rgba(255,255,255,0.85); font-family: var(--mono);
+      font-size: 10px; letter-spacing: 0.06em; padding: 8px 14px; border-radius: 8px;
+      z-index: 200; display: flex; align-items: center; gap: 8px; opacity: 0.9;
+    }
+    .hint-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); flex-shrink: 0; }
+
+    /* HOVER HIGHLIGHTS */
+    .editable-field:hover, .salutation-line:hover, .subject-text:hover,
+    #letter-content:hover, .sig-closing:hover, .sig-name:hover, .sig-title:hover, .meta-value:hover {
+      background: rgba(0,212,255,0.04); border-radius: 4px;
+    }
+
+    /* PRINT */
+    @media print {
+      body { background: white; padding: 0; margin: 0; }
+      #toolbar, #format-bar, .edit-hint { display: none !important; }
+      #letter-wrapper { margin: 0; width: 100%; max-width: 100%; filter: none; }
+      #letter { min-height: auto; }
+      .editable-field, .salutation-line, .subject-text,
+      #letter-content, .sig-closing, .sig-name, .sig-title, .meta-value {
+        border: none !important; outline: none !important; background: transparent !important;
+      }
+      .watermark { opacity: 0.06; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============ TOOLBAR ============ -->
+<div id="toolbar">
+  <div class="toolbar-brand">
+    <svg width="18" height="18" viewBox="0 0 100 100" fill="none">
+      <path d="M28 17C36 9 64 9 72 17C62 13 38 13 28 17Z" fill="#e87722"/>
+      <path d="M17 38C30 24 70 24 83 38" stroke="#0d2d6b" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <path d="M17 38C30 52 70 52 83 38" stroke="#0d2d6b" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <circle cx="50" cy="38" r="17" fill="url(#tbIris)"/>
+      <circle cx="50" cy="38" r="6" fill="#03112c"/>
+      <circle cx="45" cy="33" r="3" fill="white"/>
+      <defs><radialGradient id="tbIris" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00d4ff"/><stop offset="100%" stop-color="#0d2d6b"/></radialGradient></defs>
+    </svg>
+    <span>JTL</span> Letterhead Editor
+  </div>
+  <span class="toolbar-label">FORMAT:</span>
+  <button class="toolbar-btn btn-ghost" onclick="execCmd('bold')" title="Bold"><b>B</b></button>
+  <button class="toolbar-btn btn-ghost" onclick="execCmd('italic')" title="Italic"><i>I</i></button>
+  <button class="toolbar-btn btn-ghost" onclick="execCmd('underline')" title="Underline"><u>U</u></button>
+  <div class="toolbar-separator"></div>
+  <span class="toolbar-label">INSERT:</span>
+  <button class="toolbar-btn btn-ghost" onclick="insertToday()" title="Insert today's date">&#128197; Today</button>
+  <button class="toolbar-btn btn-ghost" onclick="execCmd('insertUnorderedList')" title="Bullet list">&#8226; List</button>
+  <button class="toolbar-btn btn-ghost" onclick="execCmd('insertOrderedList')" title="Numbered list">1. List</button>
+  <div class="toolbar-separator"></div>
+  <button class="toolbar-btn btn-primary" onclick="window.print()" id="download-btn">&#11015; Download PDF</button>
+  <button class="toolbar-btn btn-ghost" onclick="clearLetter()" title="Reset all fields">&#8635; Reset</button>
+</div>
+
+<!-- ============ FORMAT BAR ============ -->
+<div id="format-bar">
+  <select class="fmt-select" onchange="execCmd('fontSize', this.value); this.selectedIndex=0;" title="Font size">
+    <option value="" disabled selected>Size</option>
+    <option value="1">8pt</option>
+    <option value="2">10pt</option>
+    <option value="3">12pt</option>
+    <option value="4">14pt</option>
+    <option value="5">18pt</option>
+    <option value="6">24pt</option>
+  </select>
+  <div class="fmt-divider"></div>
+  <button class="fmt-btn" onclick="execCmd('justifyLeft')">&#11013; Left</button>
+  <button class="fmt-btn" onclick="execCmd('justifyCenter')">&#8644; Center</button>
+  <button class="fmt-btn" onclick="execCmd('justifyRight')">Right &#10145;</button>
+  <button class="fmt-btn" onclick="execCmd('justifyFull')">&#11021; Justify</button>
+  <div class="fmt-divider"></div>
+  <button class="fmt-btn" onclick="execCmd('strikeThrough')"><s>S</s></button>
+  <button class="fmt-btn" onclick="execCmd('superscript')">X<sup>2</sup></button>
+  <button class="fmt-btn" onclick="execCmd('subscript')">X<sub>2</sub></button>
+  <div class="fmt-divider"></div>
+  <div class="color-picker-wrap">
+    <label>A</label>
+    <input type="color" value="#060f20" title="Text color" onchange="execCmd('foreColor', this.value)" />
+  </div>
+  <div class="color-picker-wrap">
+    <label>&#128397;</label>
+    <input type="color" value="#fffde8" title="Highlight" onchange="execCmd('hiliteColor', this.value)" />
+  </div>
+  <div class="fmt-divider"></div>
+  <button class="fmt-btn" onclick="execCmd('removeFormat')">&#10005; Clear</button>
+</div>
+
+<!-- ============ LETTER ============ -->
+<div id="letter-wrapper">
+  <div id="letter">
+
+    <div class="left-strip"></div>
+
+    <!-- WATERMARK -->
+    <svg class="watermark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 50C25 25 75 25 90 50C75 75 25 75 10 50Z" fill="#0d2d6b"/>
+      <circle cx="50" cy="50" r="22" fill="url(#wmGrad)"/>
+      <circle cx="50" cy="50" r="11" fill="#03112c"/>
+      <circle cx="50" cy="50" r="18" fill="none" stroke="#00d4ff" stroke-width="1.5"/>
+      <g stroke="#00d4ff" stroke-width="1" opacity="0.9">
+        <line x1="50" y1="50" x2="61" y2="39"/><line x1="50" y1="50" x2="39" y2="61"/>
+        <line x1="50" y1="50" x2="36" y2="50"/><line x1="50" y1="50" x2="64" y2="50"/>
+        <line x1="50" y1="50" x2="50" y2="30"/><line x1="50" y1="50" x2="50" y2="70"/>
+        <line x1="50" y1="50" x2="39" y2="39"/><line x1="50" y1="50" x2="61" y2="61"/>
+      </g>
+      <circle cx="43" cy="43" r="4" fill="white" opacity="0.8"/>
+      <line x1="18" y1="50" x2="28" y2="50" stroke="#e87722" stroke-width="0.8"/>
+      <line x1="72" y1="50" x2="82" y2="50" stroke="#e87722" stroke-width="0.8"/>
+      <text x="50" y="93" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="5" font-weight="700" letter-spacing="2" fill="#0d2d6b">JURUANYA TECHNOLOGIES LIMITED</text>
+      <text x="50" y="8" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="4" font-weight="600" letter-spacing="1.5" fill="#e87722">INNOVATE . ASTONISH . TRANSFORM</text>
+      <defs>
+        <radialGradient id="wmGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#00d4ff"/>
+          <stop offset="40%" stop-color="#0077c8"/>
+          <stop offset="100%" stop-color="#0d2d6b"/>
+        </radialGradient>
+      </defs>
+    </svg>
+
+    <!-- HEADER -->
+    <header class="letter-header">
+      <svg class="header-hex-bg" viewBox="0 0 320 110" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="hxP" x="0" y="0" width="40" height="46" patternUnits="userSpaceOnUse">
+            <polygon points="20,2 38,12 38,34 20,44 2,34 2,12" fill="none" stroke="white" stroke-width="0.8"/>
+          </pattern>
+        </defs>
+        <rect width="320" height="110" fill="url(#hxP)"/>
+      </svg>
+      <div class="header-inner">
+        <div class="header-logo-col">
+          <svg class="header-logo-svg" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28 17C36 9 64 9 72 17C62 13 38 13 28 17Z" fill="#0d2d6b"/>
+            <path d="M33 21C45 15 60 17 72 26C75 28.5 77 31.5 79.5 34C77.5 32.5 74.5 30.5 72.5 29C64 22.5 48 20.5 33 21Z" fill="#e87722"/>
+            <path d="M17 38C30 24 70 24 83 38" stroke="#0d2d6b" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M17 38C30 52 70 52 83 38" stroke="#0d2d6b" stroke-width="3.5" stroke-linecap="round"/>
+            <circle cx="50" cy="38" r="17" fill="url(#hdrIris)"/>
+            <g stroke="#00d4ff" stroke-width="0.9" opacity="0.85">
+              <line x1="50" y1="38" x2="59" y2="29"/>
+              <line x1="50" y1="38" x2="41" y2="47"/>
+              <line x1="50" y1="38" x2="38" y2="38"/>
+              <line x1="50" y1="38" x2="62" y2="38"/>
+              <line x1="50" y1="38" x2="50" y2="23"/>
+              <line x1="50" y1="38" x2="50" y2="53"/>
+              <line x1="50" y1="38" x2="41" y2="29"/>
+              <line x1="50" y1="38" x2="59" y2="47"/>
+            </g>
+            <circle cx="50" cy="38" r="9" fill="none" stroke="#00d4ff" stroke-width="1.2"/>
+            <circle cx="50" cy="38" r="6" fill="#03112c"/>
+            <circle cx="45" cy="33" r="3.5" fill="white"/>
+            <circle cx="48" cy="30" r="1.2" fill="white" opacity="0.7"/>
+            <defs>
+              <radialGradient id="hdrIris" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#00d4ff"/>
+                <stop offset="40%" stop-color="#0077c8"/>
+                <stop offset="100%" stop-color="#0d2d6b"/>
+              </radialGradient>
+            </defs>
+          </svg>
+          <div class="header-name-block">
+            <div class="header-company-name">Juruanya Technologies<br/>Limited</div>
+            <div class="header-company-sub">JTL</div>
+            <div class="header-tagline">Innovate &middot; Astonish &middot; Transform</div>
+          </div>
+        </div>
+        <div class="header-contact-col">
+          <div class="contact-item">
+            <span class="ci-label">Phone</span>
+            <span class="ci-value">+234 904 569 2072</span>
+          </div>
+          <div class="contact-item">
+            <span class="ci-label">Email</span>
+            <span class="ci-value">info@juruanyatechnologies.com</span>
+          </div>
+          <div class="contact-item">
+            <span class="ci-label">Web</span>
+            <span class="ci-value">juruanyatechnologies.com</span>
+          </div>
+        </div>
+      </div>
+      <div class="header-stripe"></div>
+    </header>
+
+    <!-- META BAR -->
+    <div class="meta-bar">
+      <div class="meta-field">
+        <span class="meta-label">Ref No.</span>
+        <input class="meta-value" id="ref-no" type="text" value="JTL/2026/001" />
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-field">
+        <span class="meta-label">Date</span>
+        <input class="meta-value" id="letter-date" type="text" placeholder="1 July 2026" />
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-field">
+        <span class="meta-label">Confidentiality</span>
+        <select class="meta-value" id="confidentiality" style="cursor:pointer;">
+          <option>Open Correspondence</option>
+          <option>Strictly Confidential</option>
+          <option>Private &amp; Confidential</option>
+          <option>For Addressee Only</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="letter-body">
+      <div class="recipient-block">
+        <div class="to-label">To</div>
+        <div class="editable-field" contenteditable="true" id="recipient-name" placeholder="Recipient Name / Organisation"></div>
+        <div class="editable-field" contenteditable="true" id="recipient-address" placeholder="Address Line 1, City, State, Country" style="font-weight:400; color:#4a5a7a; font-size:12.5px;"></div>
+      </div>
+
+      <div class="subject-bar">
+        <span class="subject-label">Re:</span>
+        <div class="subject-text" contenteditable="true" id="subject" placeholder="Enter Letter Subject / Title Here"></div>
+      </div>
+
+      <div style="margin-top:24px; position:relative; z-index:1;">
+        <div class="salutation-line" contenteditable="true" id="salutation" placeholder="Dear Sir/Madam,"></div>
+      </div>
+
+      <div id="letter-content" contenteditable="true"
+        placeholder="Begin composing your letter here. Click to start typing...&#10;&#10;Use the toolbar above to format text — bold, italic, lists, alignment, colour, and more.&#10;&#10;All fields with a blue glow on hover are editable. When satisfied, click Download PDF.">
+      </div>
+    </div>
+
+    <!-- SIGNATURE -->
+    <div class="signature-section">
+      <div class="sig-left">
+        <div class="sig-closing" contenteditable="true" id="closing">Yours faithfully,</div>
+        <div class="sig-line"></div>
+        <div class="sig-name" contenteditable="true" id="sig-name">___________________________</div>
+        <div class="sig-title" contenteditable="true" id="sig-title">Authorised Signatory &middot; Juruanya Technologies Limited</div>
+      </div>
+      <div class="sig-right">
+        <div class="sig-stamp">
+          <svg width="44" height="44" viewBox="0 0 100 80" fill="none">
+            <path d="M28 17C36 9 64 9 72 17C62 13 38 13 28 17Z" fill="#0d2d6b"/>
+            <path d="M17 38C30 24 70 24 83 38" stroke="#0d2d6b" stroke-width="4" stroke-linecap="round"/>
+            <path d="M17 38C30 52 70 52 83 38" stroke="#0d2d6b" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="50" cy="38" r="17" fill="url(#stIris)"/>
+            <circle cx="50" cy="38" r="6" fill="#03112c"/>
+            <circle cx="45" cy="33" r="3.5" fill="white"/>
+            <defs>
+              <radialGradient id="stIris" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#00d4ff"/>
+                <stop offset="100%" stop-color="#0d2d6b"/>
+              </radialGradient>
+            </defs>
+          </svg>
+          <div class="sig-stamp-inner" style="margin-top:4px;">Official<br/>Seal</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="letter-footer">
+      <div class="footer-accent"></div>
+      <div class="footer-inner">
+        <div class="footer-left">
+          <span class="footer-addr">&#128205; 90 Akanro Street, Ilasamaja, Lagos, Nigeria<br/>&#128205; Costain Hub: Industrial Training Fund (ITF) House, Plot 12, Funsho Williams Avenue, Iponri, Surulere / Costain, Lagos</span>
+          <span class="footer-rc">RC: 9600871 &nbsp;|&nbsp; TIN: 2622426624523 &nbsp;|&nbsp; info@juruanyatechnologies.com &nbsp;|&nbsp; +234 904 569 2072</span>
+        </div>
+        <div class="footer-center">Innovate &middot; Astonish &middot; Transform</div>
+        <div class="footer-right">
+          <div class="footer-page-num">Page 1</div>
+          <div style="font-size:8px; color:rgba(255,255,255,0.3);">Juruanya Technologies Limited</div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+<div class="edit-hint">
+  <span class="hint-dot"></span>
+  Click any field to edit &nbsp;&middot;&nbsp; Use toolbar for formatting &nbsp;&middot;&nbsp; Ctrl+P or Download PDF when done
+</div>
+
+<script>
+  // Auto-set today's date
+  (function() {
+    const d = new Date();
+    document.getElementById('letter-date').value = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  })();
+
+  function execCmd(cmd, val) {
+    document.execCommand(cmd, false, val || null);
+  }
+
+  function insertToday() {
+    const text = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    const sel = window.getSelection();
+    if (!sel.rangeCount) return;
+    const range = sel.getRangeAt(0);
+    range.deleteContents();
+    range.insertNode(document.createTextNode(text));
+    range.collapse(false);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+
+  function clearLetter() {
+    if (!confirm('Reset all fields to blank? This cannot be undone.')) return;
+    ['recipient-name','recipient-address','subject','salutation','letter-content'].forEach(id => {
+      document.getElementById(id).innerHTML = '';
+    });
+    document.getElementById('closing').innerText = 'Yours faithfully,';
+    document.getElementById('sig-name').innerText = '___________________________';
+    document.getElementById('sig-title').innerText = 'Authorised Signatory \u00b7 Juruanya Technologies Limited';
+    document.getElementById('ref-no').value = 'JTL/2026/001';
+    document.getElementById('confidentiality').selectedIndex = 0;
+    document.getElementById('letter-date').value = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  // Focus ring on contenteditable
+  document.querySelectorAll('[contenteditable]').forEach(el => {
+    el.addEventListener('focus', () => {
+      el.style.boxShadow = 'inset 0 0 0 1.5px rgba(0,212,255,0.4)';
+      el.style.borderRadius = '4px';
+    });
+    el.addEventListener('blur', () => {
+      el.style.boxShadow = '';
+    });
+  });
+
+  // Ctrl+P shortcut
+  document.addEventListener('keydown', e => {
+    if (e.ctrlKey && e.key === 'p') { e.preventDefault(); window.print(); }
+  });
+</script>
+</body>
+</html>
