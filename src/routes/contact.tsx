@@ -53,7 +53,16 @@ function ContactPage() {
                 </div>
                 <div>
                   <p className="text-[10px] font-mono font-semibold uppercase tracking-wider text-muted-foreground">{c.label}</p>
-                  <p className="text-foreground text-sm font-medium leading-relaxed">{c.value}</p>
+                  {c.label === "Email" ? (
+                    <a
+                      href="mailto:info@juruanyatechnologies.com"
+                      className="text-foreground text-sm font-medium leading-relaxed hover:text-secondary transition-colors"
+                    >
+                      {c.value}
+                    </a>
+                  ) : (
+                    <p className="text-foreground text-sm font-medium leading-relaxed">{c.value}</p>
+                  )}
                 </div>
               </div>
             ))}

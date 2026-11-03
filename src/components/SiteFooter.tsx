@@ -91,7 +91,13 @@ export function SiteFooter() {
               <Phone className="h-4 w-4 text-secondary" /> +234 904 569 2072
             </li>
             <li className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-secondary" /> info@juruanyatechnologies.com
+              <Mail className="h-4 w-4 text-secondary" />
+              <a
+                href="mailto:info@juruanyatechnologies.com"
+                className="hover:text-secondary transition-colors"
+              >
+                info@juruanyatechnologies.com
+              </a>
             </li>
             <li className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-secondary" /> Mon – Fri, 8am – 5pm
