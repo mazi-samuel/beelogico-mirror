@@ -16,12 +16,21 @@ const FOUNDER_JSON_LD = {
       url: "https://juruanyatechnologies.com/",
       email: "info@juruanyatechnologies.com",
       telephone: "+234 904 569 2072",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "90 Akanro Street, Ilasamaja",
-        addressLocality: "Lagos",
-        addressCountry: "NG",
-      },
+      address: [
+        {
+          "@type": "PostalAddress",
+          streetAddress: "90 Akanro Street, Ilasamaja",
+          addressLocality: "Lagos",
+          addressCountry: "NG",
+        },
+        {
+          "@type": "PostalAddress",
+          streetAddress: "Industrial Training Fund (ITF) House, Plot 12, Funsho Williams Avenue, Iponri, Surulere / Costain",
+          addressLocality: "Lagos",
+          addressCountry: "NG",
+          name: "Costain Hub",
+        },
+      ],
       founder: { "@id": "https://juruanyatechnologies.com/#mazi-nwakaeze" },
       sameAs: [
         "https://www.linkedin.com/company/j%E1%BB%A5%CC%80r%E1%BB%A5%CC%80-%C3%A1ny%C3%A1-technologies-limited/",

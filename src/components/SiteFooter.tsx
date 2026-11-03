@@ -98,7 +98,12 @@ export function SiteFooter() {
             </li>
             <li className="flex items-start gap-2">
               <MapPin className="h-4 w-4 text-secondary mt-0.5 flex-shrink-0" />
-              <span>90 Akanro Street, Ilasamaja, Lagos, Nigeria</span>
+              <span>
+                90 Akanro Street, Ilasamaja, Lagos, Nigeria
+                <br />
+                Costain Hub: Industrial Training Fund (ITF) House, Plot 12, Funsho Williams Avenue,
+                Iponri, Surulere / Costain, Lagos
+              </span>
             </li>
           </ul>
         </div>

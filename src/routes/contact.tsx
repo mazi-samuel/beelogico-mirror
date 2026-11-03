@@ -45,7 +45,11 @@ function ContactPage() {
               { icon: Phone, label: "Phone", value: "+234 904 569 2072" },
               { icon: Mail, label: "Email", value: "info@juruanyatechnologies.com" },
               { icon: Clock, label: "Office Hours", value: "Mon – Fri · 8:00 am – 5:00 pm" },
-              { icon: MapPin, label: "Office Address", value: "90 Akanro Street, Ilasamaja, Lagos, Nigeria" },
+              {
+                icon: MapPin,
+                label: "Office Addresses",
+                value: "90 Akanro Street, Ilasamaja, Lagos, Nigeria\nCostain Hub: Industrial Training Fund (ITF) House, Plot 12, Funsho Williams Avenue, Iponri, Surulere / Costain, Lagos",
+              },
               { icon: Building, label: "Legal Info", value: "RC: 9600871 · TIN: 2622426624523" },
             ].map((c) => (
               <div key={c.label} className="flex items-start gap-4 p-5 rounded-xl bg-card border border-border/60">
@@ -54,7 +58,7 @@ function ContactPage() {
                 </div>
                 <div>
                   <p className="text-[10px] font-mono font-semibold uppercase tracking-wider text-muted-foreground">{c.label}</p>
-                  <p className="text-foreground text-sm font-medium leading-relaxed">{c.value}</p>
+                  <p className="text-foreground text-sm font-medium leading-relaxed whitespace-pre-line">{c.value}</p>
                 </div>
               </div>
             ))}
