@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, Clock, MapPin, Building } from "lucide-react";
 import { HexBackground } from "@/components/HexBackground";
+import { LOCATIONS_JSON_LD } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -11,6 +12,12 @@ export const Route = createFileRoute("/contact")({
       { name: "description", content: "Get in touch with Juruanya Technologies Limited (JTL). Phone: +234 904 569 2072, Address: Lagos, Nigeria." },
       { property: "og:title", content: "Contact Us — JTL" },
       { property: "og:description", content: "Connect with our engineering and leadership teams in Lagos." },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(LOCATIONS_JSON_LD),
+      },
     ],
   }),
   component: ContactPage,
@@ -80,7 +87,7 @@ function ContactPage() {
                   rel="noopener noreferrer"
                   className="block text-sm font-medium leading-relaxed hover:text-secondary transition-colors"
                 >
-                  <span className="block font-semibold text-foreground">Ilasamaja Office</span>
+                  <span className="block font-semibold text-foreground">Juruanya Technologies Limited — Ilasamaja Office</span>
                   90 Akanro Street, Ilasamaja, Lagos, Nigeria
                   <span className="block text-xs text-muted-foreground mt-1">Open in Google Maps</span>
                 </a>
@@ -90,7 +97,7 @@ function ContactPage() {
                   rel="noopener noreferrer"
                   className="block text-sm font-medium leading-relaxed hover:text-secondary transition-colors"
                 >
-                  <span className="block font-semibold text-foreground">Costain Hub</span>
+                  <span className="block font-semibold text-foreground">Juruanya Technologies Limited — Costain Hub</span>
                   Industrial Training Fund (ITF) House, Plot 12, Funsho Williams Avenue, Iponri,
                   Surulere / Costain, Lagos
                   <span className="block text-xs text-muted-foreground mt-1">Open in Google Maps</span>

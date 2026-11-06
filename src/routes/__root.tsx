@@ -8,6 +8,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { ThemeProvider } from "../hooks/useTheme";
 import { GlobalWaterRipple } from "../components/GlobalWaterRipple";
 import { FluidDistortion } from "../components/FluidDistortion";
+import { ORGANIZATION_JSON_LD } from "@/lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -47,6 +48,12 @@ export const Route = createRootRoute({
       { property: "og:description", content: "Lagos-based technology company building software, platforms & digital products that astonish." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(ORGANIZATION_JSON_LD),
+      },
     ],
     links: [
       {

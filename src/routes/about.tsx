@@ -4,47 +4,18 @@ import { Eye, Target, Award, Shield, Zap, Sparkles, Building, Landmark } from "l
 import { SectionTitle } from "@/components/SectionTitle";
 import { HexBackground } from "@/components/HexBackground";
 import { JTLLogo } from "@/components/JTLLogo";
+import { ORGANIZATION_ID } from "@/lib/seo";
 
 const FOUNDER_JSON_LD = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
-      "@id": "https://juruanyatechnologies.com/#organization",
-      name: "Juruanya Technologies Limited",
-      alternateName: ["JTL", "Jụ̀rụ̀ ányá Technologies Limited"],
-      url: "https://juruanyatechnologies.com/",
-      email: "info@juruanyatechnologies.com",
-      telephone: "+234 904 569 2072",
-      address: [
-        {
-          "@type": "PostalAddress",
-          streetAddress: "90 Akanro Street, Ilasamaja",
-          addressLocality: "Lagos",
-          addressCountry: "NG",
-        },
-        {
-          "@type": "PostalAddress",
-          streetAddress: "Industrial Training Fund (ITF) House, Plot 12, Funsho Williams Avenue, Iponri, Surulere / Costain",
-          addressLocality: "Lagos",
-          addressCountry: "NG",
-          name: "Costain Hub",
-        },
-      ],
-      founder: { "@id": "https://juruanyatechnologies.com/#mazi-nwakaeze" },
-      sameAs: [
-        "https://www.linkedin.com/company/j%E1%BB%A5%CC%80r%E1%BB%A5%CC%80-%C3%A1ny%C3%A1-technologies-limited/",
-        "https://www.instagram.com/juruanyatech",
-        "https://www.facebook.com/share/1JH8YqWsLn/",
-      ],
-    },
-    {
       "@type": "Person",
       "@id": "https://juruanyatechnologies.com/#mazi-nwakaeze",
       name: "Mazi Nwakaeze",
       jobTitle: ["Founder", "CEO"],
-      worksFor: { "@id": "https://juruanyatechnologies.com/#organization" },
-      affiliation: { "@id": "https://juruanyatechnologies.com/#organization" },
+      worksFor: { "@id": ORGANIZATION_ID },
+      affiliation: { "@id": ORGANIZATION_ID },
       url: "https://juruanyatechnologies.com/about",
     },
   ],

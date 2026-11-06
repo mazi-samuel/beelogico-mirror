@@ -6,15 +6,15 @@ export function SiteFooter() {
   return (
     <footer className="relative mt-24 bg-[oklch(0.18_0.04_254)] text-white/80">
       <div className="absolute inset-x-0 -top-px h-24 bg-gradient-to-b from-background to-transparent pointer-events-none" />
-      <div className="mx-auto max-w-6xl px-6 py-16 grid gap-10 md:grid-cols-4">
+      <div className="mx-auto max-w-6xl px-6 py-16 grid gap-10 text-center md:grid-cols-4 md:text-left">
         <div className="md:col-span-2">
-          <JTLLogo useImage={true} className="h-16 brightness-0 invert" />
-          <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65">
+          <JTLLogo useImage={true} className="mx-auto h-16 brightness-0 invert md:mx-0" />
+          <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-white/65 md:mx-0">
             Juruanya Technologies Limited (JTL) is a Lagos-based technology startup building
             innovative software solutions, digital platforms, SaaS products, AI/ML, and technology
             hardware products that astonish.
           </p>
-          <div className="mt-6 flex gap-3">
+          <div className="mt-6 flex justify-center gap-3 md:justify-start">
             <a
               href="https://www.facebook.com/share/1JH8YqWsLn/?mibextid=wwXIfr"
               target="_blank"
@@ -87,10 +87,10 @@ export function SiteFooter() {
         <div>
           <h4 className="text-white font-semibold mb-4">Get in touch</h4>
           <ul className="space-y-3 text-sm">
-            <li className="flex items-center gap-2">
+            <li className="flex items-center justify-center gap-2 md:justify-start">
               <Phone className="h-4 w-4 text-secondary" /> +234 904 569 2072
             </li>
-            <li className="flex items-center gap-2">
+            <li className="flex items-center justify-center gap-2 md:justify-start">
               <Mail className="h-4 w-4 text-secondary" />
               <a
                 href="mailto:info@juruanyatechnologies.com"
@@ -99,12 +99,12 @@ export function SiteFooter() {
                 info@juruanyatechnologies.com
               </a>
             </li>
-            <li className="flex items-center gap-2">
+            <li className="flex items-center justify-center gap-2 md:justify-start">
               <Clock className="h-4 w-4 text-secondary" /> Mon – Fri, 8am – 5pm
             </li>
-            <li className="flex items-start gap-2">
+            <li className="flex items-start justify-center gap-2 md:justify-start">
               <MapPin className="h-4 w-4 text-secondary mt-0.5 flex-shrink-0" />
-              <div className="space-y-2">
+              <div className="space-y-2 text-center md:text-left">
                 <a
                   href="https://www.google.com/maps/search/?api=1&query=90%20Akanro%20Street%2C%20Ilasamaja%2C%20Lagos%2C%20Nigeria"
                   target="_blank"
@@ -130,12 +130,12 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-white/10">
-        <div className="mx-auto max-w-6xl px-6 py-5 text-xs text-white/55 flex flex-col sm:flex-row gap-2 justify-between">
+        <div className="mx-auto max-w-6xl px-6 py-5 text-center text-xs text-white/55 flex flex-col gap-2 sm:flex-row sm:justify-between sm:text-left">
           <span>
             © {new Date().getFullYear()} Juruanya Technologies Limited. All rights reserved. (RC:
             9600871 · TIN: 2622426624523)
           </span>
-          <span>Crafted with care in Lagos · Nigeria</span>
+          <span className="sm:text-right">Crafted with care in Lagos · Nigeria</span>
         </div>
       </div>
     </footer>
